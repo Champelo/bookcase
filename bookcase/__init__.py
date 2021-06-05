@@ -13,8 +13,6 @@ def create_app(test_config=None):
         #FIXME: Remember to change this to something more secure when deploying.
         SECRET_KEY='123'
     )
-    app.config['FLASK_APP'] = 'bookcase'
-    app.config['FLASK_ENV'] = 'development'
     app.config['TESTING'] = True
     app.config['SQLALCHEMY_ECHO'] = True
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///bookcase.db'

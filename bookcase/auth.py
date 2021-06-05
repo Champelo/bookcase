@@ -33,9 +33,9 @@ def logout():
 @auth_blueprint.route('/sign-up', methods=['GET', 'POST'])
 def sign_up():
     if request.method == 'POST':
-        email = request.form.get['email']
-        password = request.form.get['password']
-        con_password = request.form.get['con_password']
+        email = request.form['email']
+        password = request.form['password']
+        con_password = request.form['con_password']
         if len(email) < 4:
             flash("Email shorter than 4", category='error')
         elif len(password) < 4:

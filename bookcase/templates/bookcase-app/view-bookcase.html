@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}View Bookcase{% endblock %}
+
+{% block content %}
+<h1 align='center'>Bookcase</h1>
+<ul>
+    {% for book in book_case %}
+        <div>
+            <a href="book-profile/{{ book.isbn }}">{{ book.title }}</a>
+            <p>{{ book.isbn }}</p>
+        </div>
+    {% endfor %}
+</ul>
+{% endblock %}

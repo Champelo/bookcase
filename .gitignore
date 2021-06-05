@@ -141,3 +141,5 @@ cython_debug/
 bookcase.db
 instance/
 tests/
+config.js
+jquery-3.6.0.min.js

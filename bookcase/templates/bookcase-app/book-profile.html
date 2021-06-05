@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}Update{% endblock %}
+{% block content %}
+    <h1 align="center">{{ book.title }}</h1>
+    <div>
+        <p align="center">Isbn: {{ book.isbn }}</p>
+    </div>
+    <div align="center">
+        <a href="#">Checkout</a>
+        <a href="../update-book/{{ book.isbn }}">Update</button>
+        <a href="#">Delete</a>
+    </div>
+{% endblock %}
