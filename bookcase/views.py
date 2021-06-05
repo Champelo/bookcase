@@ -22,6 +22,7 @@ def add_book():
     if request.method == 'POST':
         title = request.form['title']
         isbn = request.form['isbn']
+        price = request.form['price']
         if len(isbn) != 13:
             flash('ISBN is not 13 characters')
         elif len(title) < 1:
@@ -29,7 +30,7 @@ def add_book():
         elif bool(db.session.query(Book.isbn).filter_by(isbn=isbn).first()) == True:
             flash('Book already exists', category='error')
         else:
-            new_book = Book(title=title, isbn=isbn)
+            new_book = Book(title=title, isbn=isbn, bookprice=price)
             db.session.add(new_book)
             db.session.commit()
             return redirect(url_for('views.view_bookcase'))
@@ -52,3 +53,20 @@ def update_book(isbn):
         return redirect(url_for('views.book_profile', isbn=isbn))
     
     return render_template('bookcase-app/update.html', user=current_user, book=book)
+
+@views_blueprint.route('/delete-book/<string:isbn>', methods=['GET', 'POST'])
+@login_required
+def delete_book(isbn):
+    book = db.session.query(Book).filter_by(isbn=isbn).first()
+    db.session.delete(book)
+    db.session.commit()
+    flash('Book is successfully deleted', category='success')
+    return redirect(url_for('views.view_bookcase'))
+
+@views_blueprint.route('/change-status/<string:isbn>', methods=['GET', 'POST'])
+@login_required
+def change_status(isbn):
+    book = db.session.query(Book).filter_by(isbn=isbn).first()
+    book.book_status = not book.book_status
+    db.session.commit()
+    return redirect(url_for('views.book_profile', isbn=isbn))

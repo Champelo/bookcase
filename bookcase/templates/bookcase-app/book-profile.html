@@ -2,13 +2,23 @@
 
 {% block title %}Update{% endblock %}
 {% block content %}
-    <h1 align="center">{{ book.title }}</h1>
-    <div>
-        <p align="center">Isbn: {{ book.isbn }}</p>
+    <div align="center">
+        <h1>{{ book.title }}</h1>
+        <p>Isbn: {{ book.isbn }}</p>
+        {% if book.book_status %}
+            <p>Book Status: <b>IN</b></p>
+        {% else %}
+            <p>Book Status: <b>OUT</b></p>
+        {% endif %}
+        
     </div>
     <div align="center">
-        <a href="#">Checkout</a>
+        {% if book.book_status %}
+            <a href="../change-status/{{ book.isbn }}">Checkout</a>
+        {% else %}
+            <a href="../change-status/{{ book.isbn }}">Check In</a>
+        {% endif %}
         <a href="../update-book/{{ book.isbn }}">Update</button>
-        <a href="#">Delete</a>
+        <a href="../delete-book/{{ book.isbn }}">Delete</a>
     </div>
 {% endblock %}
