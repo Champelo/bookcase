@@ -1,7 +1,8 @@
 from flask import render_template, Blueprint, request, redirect, url_for, flash
 from flask_login import current_user, login_required
-from .models import Book
+from .models import Book, Borrower
 from . import db
+from datetime import datetime, timedelta
 
 views_blueprint = Blueprint('views', __name__, url_prefix='/user')
 
@@ -52,7 +53,7 @@ def update_book(isbn):
         db.session.commit()
         return redirect(url_for('views.book_profile', isbn=isbn))
     
-    return render_template('bookcase-app/update.html', user=current_user, book=book)
+    return render_template('bookcase-app/update-book.html', user=current_user, book=book)
 
 @views_blueprint.route('/delete-book/<string:isbn>', methods=['GET', 'POST'])
 @login_required
@@ -68,5 +69,61 @@ def delete_book(isbn):
 def change_status(isbn):
     book = db.session.query(Book).filter_by(isbn=isbn).first()
     book.book_status = not book.book_status
+    if not book.book_status:
+        book.due_date = datetime.utcnow() + timedelta(days=30)
+    else:
+        book.due_date = None
     db.session.commit()
     return redirect(url_for('views.book_profile', isbn=isbn))
+
+@views_blueprint.route('/borrowers/add-new', methods=['GET', 'POST'])
+@login_required
+def add_borrower():
+    if request.method == 'POST':
+            fname = request.form['fname']
+            lname = request.form['lname']
+            if len(fname) < 1:
+                flash('Please enter first name')
+            elif len(lname) < 1:
+                flash('Please enter last name')
+            else:
+                new_borrower = Borrower(fname=fname, lname=lname)
+                db.session.add(new_borrower)
+                db.session.commit()
+                return redirect(url_for('views.view_borrowers'))
+    return render_template('bookcase-app/addborrower.html', user=current_user)
+
+@views_blueprint.route('/borrowers')
+@login_required
+def view_borrowers():
+    borrowers = db.session.query(Borrower)
+    return render_template('bookcase-app/view-borrowers.html', user=current_user, borrowers=borrowers)
+
+@views_blueprint.route('/borrowers/<int:id>')
+@login_required
+def borrower_profile(id):
+    borrower = db.session.query(Borrower).filter_by(id=id).first()
+    return render_template('bookcase-app/borrower-profile.html', user=current_user, borrower=borrower)
+
+@views_blueprint.route('/borrowers/<int:id>/update-borrower', methods=['GET', 'POST'])
+@login_required
+def update_borrower(id):
+    borrower = db.session.query(Borrower).filter_by(id=id).first()
+    if request.method == 'POST':
+        fname = request.form['fname']
+        lname = request.form['lname']
+        borrower.fname = fname
+        borrower.lname = lname
+        db.session.commit()
+        return redirect(url_for('views.borrower_profile', id=id))
+    
+    return render_template('bookcase-app/update-borrower.html', user=current_user, borrower=borrower)
+
+@views_blueprint.route('/borrowers/<int:id>/delete', methods=['GET', 'POST'])
+@login_required
+def delete_borrower(id):
+    borrower = db.session.query(Borrower).filter_by(id=id).first()
+    db.session.delete(borrower)
+    db.session.commit()
+    flash('Borrower is successfully deleted', category='success')
+    return redirect(url_for('views.view_borrowers'))

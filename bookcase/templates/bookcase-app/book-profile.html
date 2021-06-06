@@ -8,6 +8,7 @@
         {% if book.book_status %}
             <p>Book Status: <b>IN</b></p>
         {% else %}
+            <p>Due: {{ book.due_date }}</p>
             <p>Book Status: <b>OUT</b></p>
         {% endif %}
         

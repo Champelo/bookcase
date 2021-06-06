@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}Update{% endblock %}
+
+{% block content %}
+<h1>Update</h1>
+
+<form method="post">
+    <div class="form-group">
+        <label for="fname">First Name</label>
+        <input type="text" class="form-control" name="fname" placeholder="{{ borrower.fname }}" value="{{ borrower.fname }}">
+    </div>
+    <div class="form-group">
+        <label for="lname">Last Name</label>
+        <input type="text" class="form-control" name="lname" placeholder="{{ borrower.lname }}" value="{{ borrower.lname }}">
+    </div>
+    <button class="btn btn-primary" type="submit" value="Submit">Enter</button>
+</form>
+
+{% endblock %}

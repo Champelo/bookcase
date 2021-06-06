@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block title %}Update{% endblock %}
+{% block content %}
+    <div align="center">
+        <h1>{{ borrower.fname }} {{ borrower.lname }}</h1>
+        <p>Rating: {{ borrower.rating }}</p>   
+    </div>
+    <div align="center">
+        <a href="{{ borrower.id }}/update-borrower">Update</button>
+        <a href="{{ borrower.id }}/delete">Delete</a>
+    </div>
+{% endblock %}
