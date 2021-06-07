@@ -13,10 +13,13 @@ class Book(db.Model):
     title = db.Column(db.String(), nullable=False)
     bookprice = db.Column(db.Numeric(6, 2), default=0.00)
     due_date = db.Column(db.Date, nullable=True, default=datetime.utcnow)
-    book_status = db.Column(db.Boolean, default=True)
+    status = db.Column(db.Boolean, default=True)
+    borrower_id = db.Column(db.Integer, db.ForeignKey('borrower.borrowerId'))
+    borrower = db.relationship('Borrower')
 
 class Borrower(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
+    borrowerId = db.Column(db.Integer, primary_key=True)
     fname = db.Column(db.String(), nullable=False)
     lname = db.Column(db.String(), nullable=False)
     rating = db.Column(db.Integer, nullable=False, default=5)
+    book = db.relationship('Book', back_populates='borrower')

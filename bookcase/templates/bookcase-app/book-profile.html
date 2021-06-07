@@ -5,7 +5,7 @@
     <div align="center">
         <h1>{{ book.title }}</h1>
         <p>Isbn: {{ book.isbn }}</p>
-        {% if book.book_status %}
+        {% if book.status %}
             <p>Book Status: <b>IN</b></p>
         {% else %}
             <p>Due: {{ book.due_date }}</p>
@@ -14,8 +14,8 @@
         
     </div>
     <div align="center">
-        {% if book.book_status %}
-            <a href="../change-status/{{ book.isbn }}">Checkout</a>
+        {% if book.status %}
+            <a href="../change-status/{{ book.isbn }}/choose-borrower">Checkout</a>
         {% else %}
             <a href="../change-status/{{ book.isbn }}">Check In</a>
         {% endif %}

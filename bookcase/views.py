@@ -64,16 +64,34 @@ def delete_book(isbn):
     flash('Book is successfully deleted', category='success')
     return redirect(url_for('views.view_bookcase'))
 
-@views_blueprint.route('/change-status/<string:isbn>', methods=['GET', 'POST'])
+
+@views_blueprint.route('/change-status/<string:isbn>/borrower/<int:borrowerID>', methods=['GET'])
 @login_required
-def change_status(isbn):
+def chooseBorrower(isbn, borrowerID=None):
     book = db.session.query(Book).filter_by(isbn=isbn).first()
-    book.book_status = not book.book_status
-    if not book.book_status:
-        book.due_date = datetime.utcnow() + timedelta(days=30)
-    else:
-        book.due_date = None
+    book.borrower_id = borrowerID
+    book.due_date = datetime.utcnow() + timedelta(days=30)
+    book.status = False
     db.session.commit()
+    flash('Book is now checked out', category='success')
+    return redirect(url_for('views.book_profile', isbn=isbn))
+        
+@views_blueprint.route('/change-status/<string:isbn>/choose-borrower', methods=['GET'])
+@login_required
+def view_choose_borrower(isbn):
+    borrowers = db.session.query(Borrower)
+    book = db.session.query(Book).filter_by(isbn=isbn).first()
+    return render_template('bookcase-app/checkout.html', user=current_user, borrowers=borrowers, book=book)
+
+@views_blueprint.route('/change-status/<string:isbn>', methods=['GET'])
+@login_required
+def returnBook(isbn):
+    book = db.session.query(Book).filter_by(isbn=isbn).first()
+    book.borrower_id = None
+    book.due_date = None
+    book.status = True
+    db.session.commit()
+    flash('Book is now checked-in', category='success')
     return redirect(url_for('views.book_profile', isbn=isbn))
 
 @views_blueprint.route('/borrowers/add-new', methods=['GET', 'POST'])
@@ -99,30 +117,30 @@ def view_borrowers():
     borrowers = db.session.query(Borrower)
     return render_template('bookcase-app/view-borrowers.html', user=current_user, borrowers=borrowers)
 
-@views_blueprint.route('/borrowers/<int:id>')
+@views_blueprint.route('/borrowers/<int:borrowerID>')
 @login_required
-def borrower_profile(id):
-    borrower = db.session.query(Borrower).filter_by(id=id).first()
+def borrower_profile(borrowerID):
+    borrower = db.session.query(Borrower).filter_by(borrowerID=borrowerID).first()
     return render_template('bookcase-app/borrower-profile.html', user=current_user, borrower=borrower)
 
-@views_blueprint.route('/borrowers/<int:id>/update-borrower', methods=['GET', 'POST'])
+@views_blueprint.route('/borrowers/<int:borrowerID>/update-borrower', methods=['GET', 'POST'])
 @login_required
-def update_borrower(id):
-    borrower = db.session.query(Borrower).filter_by(id=id).first()
+def update_borrower(borrowerID):
+    borrower = db.session.query(Borrower).filter_by(borrowerID=borrowerID).first()
     if request.method == 'POST':
         fname = request.form['fname']
         lname = request.form['lname']
         borrower.fname = fname
         borrower.lname = lname
         db.session.commit()
-        return redirect(url_for('views.borrower_profile', id=id))
+        return redirect(url_for('views.borrower_profile', borrowerID=borrowerID))
     
     return render_template('bookcase-app/update-borrower.html', user=current_user, borrower=borrower)
 
-@views_blueprint.route('/borrowers/<int:id>/delete', methods=['GET', 'POST'])
+@views_blueprint.route('/borrowers/<int:borrowerID>/delete', methods=['GET', 'POST'])
 @login_required
-def delete_borrower(id):
-    borrower = db.session.query(Borrower).filter_by(id=id).first()
+def delete_borrower(borrowerID):
+    borrower = db.session.query(Borrower).filter_by(borrowerID=borrowerID).first()
     db.session.delete(borrower)
     db.session.commit()
     flash('Borrower is successfully deleted', category='success')

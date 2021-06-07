@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}Checkout{% endblock %}
+
+{% block content %}
+<h1 align='center'>Checkout</h1>
+<ul align="center">
+    {% for borrower in borrowers %}
+        <div>
+            <a href="../{{ book.isbn }}/borrower/{{ borrower.borrowerId }}">{{ borrower.fname }} {{ borrower.lname }}</a>
+            <p>{{ borrower.rating }}</p>
+        </div>
+    {% endfor %}
+</ul>
+{% endblock %}
