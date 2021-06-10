@@ -15,11 +15,11 @@
     </div>
     <div align="center">
         {% if book.status %}
-            <a href="../change-status/{{ book.isbn }}/choose-borrower">Checkout</a>
+            <a href="{{ url_for('borrower_bp.view_choose_borrower', isbn=book.isbn) }}">Checkout</a>
         {% else %}
-            <a href="../change-status/{{ book.isbn }}">Check In</a>
+            <a href="{{ url_for('book_bp.returnBook', isbn=book.isbn) }}">Check In</a>
         {% endif %}
-        <a href="../update-book/{{ book.isbn }}">Update</button>
-        <a href="../delete-book/{{ book.isbn }}">Delete</a>
+        <a href="{{ url_for('book_bp.update_book', isbn=book.isbn) }}">Update</button>
+        <a href="{{ url_for('book_bp.delete_book', isbn=book.isbn) }}">Delete</a>
     </div>
 {% endblock %}

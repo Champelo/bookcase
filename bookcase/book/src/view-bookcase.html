@@ -7,7 +7,7 @@
 <ul>
     {% for book in book_case %}
         <div>
-            <a href="book-profile/{{ book.isbn }}">{{ book.title }}</a>
+            <a href="{{ url_for('book_bp.book_profile', isbn=book.isbn) }}">{{ book.title }}</a>
             <p>{{ book.isbn }}</p>
         </div>
     {% endfor %}

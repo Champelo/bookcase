@@ -4,11 +4,11 @@
 
 {% block content %}
 <h1 align='center'>Borrowers</h1>
-<a href='borrowers/add-new'>+ Add New</a>
+<a href="{{ url_for('borrower_bp.add_borrower') }}">+ Add New</a>
 <ul align="center">
     {% for borrower in borrowers %}
         <div>
-            <a href="borrowers/{{ borrower.id }}">{{ borrower.fname }} {{ borrower.lname }}</a>
+            <a href="{{ url_for('borrower_bp.borrower_profile', borrowerID=borrower.borrowerId) }}">{{ borrower.fname }} {{ borrower.lname }}</a>
             <p>{{ borrower.rating }}</p>
         </div>
     {% endfor %}

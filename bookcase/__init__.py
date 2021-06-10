@@ -42,11 +42,15 @@ def create_app(test_config=None):
         with app.app_context():
             db.create_all()
 
-    from .auth import auth_blueprint
-    from .views import views_blueprint
+    from .auth import auth_bp
+    from .home import home_bp
+    from .book import book_bp
+    from .borrower import borrower_bp
 
-    app.register_blueprint(auth_blueprint)
-    app.register_blueprint(views_blueprint)
+    app.register_blueprint(auth_bp)
+    app.register_blueprint(home_bp)
+    app.register_blueprint(book_bp)
+    app.register_blueprint(borrower_bp)
     
     @login_manager.user_loader
     def load_user(id):

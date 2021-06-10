@@ -7,7 +7,7 @@
         <p>Rating: {{ borrower.rating }}</p>   
     </div>
     <div align="center">
-        <a href="{{ borrower.borrowerId }}/update-borrower">Update</button>
-        <a href="{{ borrower.borrowerId }}/delete">Delete</a>
+        <a href="{{url_for('borrower_bp.update_borrower', borrowerID=borrower.borrowerId) }}">Update</button>
+        <a href="{{ url_for('borrower_bp.delete_borrower', borrowerID=borrower.borrowerId) }}">Delete</a>
     </div>
 {% endblock %}
