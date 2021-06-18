@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}Spending Log{% endblock %}
+
+{% block content %}
+    <h1>Spending Log</h1>
+    {% for book in books %}
+        <div>
+            <a href="{{ url_for('book_bp.book_profile', isbn=book.isbn) }}">{{ book.title }}</a>
+            <p>{{ book.bookprice }}</p>
+            <p>Purchase Date: {{ book.purchased_date }}</p>
+        </div>
+    {% endfor %}    
+{% endblock %}

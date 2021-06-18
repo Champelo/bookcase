@@ -3,7 +3,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 import os.path
 from flask_login import LoginManager
-
+from .schedules import overdue_check
 
 db = SQLAlchemy()
 
@@ -46,15 +46,19 @@ def create_app(test_config=None):
     from .home import home_bp
     from .book import book_bp
     from .borrower import borrower_bp
+    from .budget import budget_bp
 
     app.register_blueprint(auth_bp)
     app.register_blueprint(home_bp)
     app.register_blueprint(book_bp)
     app.register_blueprint(borrower_bp)
+    app.register_blueprint(budget_bp)
     
     @login_manager.user_loader
     def load_user(id):
         return User.query.get(id)
 
     return app
+
+
 

@@ -4,6 +4,8 @@ from bookcase import models
 from bookcase import db
 from datetime import datetime, timedelta
 from . import book_bp
+from decimal import Decimal
+
 
 
 @book_bp.route('/')
@@ -35,7 +37,7 @@ def add_book():
             new_book = models.Book(title=title, isbn=isbn, bookprice=price)
             db.session.add(new_book)
             db.session.commit()
-            return redirect(url_for('book_bp.bookcase'))
+            return redirect(url_for('budget_bp.decrease_remaining', isbn=new_book.isbn))
     return render_template('addbook.html', user=current_user)
 
 @book_bp.route('/update-book/<string:isbn>', methods=['GET', 'POST'])
@@ -43,8 +45,17 @@ def add_book():
 def update_book(isbn):
     book = db.session.query(models.Book).filter_by(isbn=isbn).first()
     if request.method == 'POST':
-        title = request.form['title']
-        book.title = title
+        bookprice = request.form['bookprice']
+        if book.bookprice < Decimal(bookprice):
+            pricediff = Decimal(bookprice) - book.bookprice
+            current_user.bud_remaining = current_user.bud_remaining - pricediff
+        elif book.bookprice > Decimal(bookprice):
+            pricediff = book.bookprice - Decimal(bookprice)
+            current_user.bud_remaining = current_user.bud_remaining + pricediff
+        book.bookprice = bookprice
+        if book.due_date is not None:
+            due_date = request.form['due_date']
+            book.due_date = due_date
         db.session.commit()
         return redirect(url_for('book_bp.book_profile', isbn=isbn))
     
@@ -54,6 +65,7 @@ def update_book(isbn):
 @login_required
 def delete_book(isbn):
     book = db.session.query(models.Book).filter_by(isbn=isbn).first()
+    current_user.bud_remaining = current_user.bud_remaining + book.bookprice
     db.session.delete(book)
     db.session.commit()
     flash('Book is successfully deleted', category='success')

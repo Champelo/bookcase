@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}My Budget{% endblock %}
+
+{% block content %}
+    <h1>My Budget</h1>
+    <br>
+    <h2>Budget Remaining</h2>
+    <div>$ {{ current_user.bud_remaining }}</div>
+    <a href="{{ url_for('budget_bp.spending_log') }}">View Books</a>
+    <br>
+    <br>
+    <div>Current Budget is {{ current_user.budget }}</div>
+    <a href="{{ url_for('budget_bp.change_budget') }}">Change Budget</a>
+    <a href="{{ url_for('budget_bp.delete_budget') }}">Delete Budget</a>
+{% endblock %}
