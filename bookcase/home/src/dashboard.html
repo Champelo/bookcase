@@ -3,5 +3,19 @@
 {% block title %}Dashboard{% endblock %}
 
 {% block content %}
-   
+   <h1>Dashboard</h1>
+   <h2>Overdue Books</h2>
+   {% if books|length == 0 %}
+    <p>No Overdue Books</p>
+   {% else %}
+    <ul>
+        {% for book in books %}
+            <div>
+                <a href="{{ url_for('book_bp.book_profile', isbn=book.isbn) }}">{{ book.title }}</a>
+                <p>{{ book.due_date }}</p>
+                <a href="{{ url_for('borrower_bp.borrower_profile', borrowerID=book.borrowerId) }}">{{ book.fname }} {{ book.lname }}</p>
+            </div>
+        {% endfor %}
+    </ul>
+    {% endif %}
 {% endblock %}

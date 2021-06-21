@@ -55,7 +55,7 @@ def update_book(isbn):
         book.bookprice = bookprice
         if book.due_date is not None:
             due_date = request.form['due_date']
-            book.due_date = due_date
+            book.due_date = datetime.strptime(due_date, '%Y-%m-%d')
         db.session.commit()
         return redirect(url_for('book_bp.book_profile', isbn=isbn))
     

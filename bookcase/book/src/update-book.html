@@ -8,12 +8,12 @@
 <form method="post">
     <div class="form-group">
         <label for="bookprice">Price</label>
-        <input type="text" class="form-control" name="bookprice" placeholder="{{ book.bookprice }}">
+        <input type="text" class="form-control" name="bookprice" value="{{ book.bookprice }}">
     </div>
     {% if book.due_date is not none %}
     <div class="form-group">
         <label for="due_date">Due Date</label>
-        <input type="date" class="form-control" name="due_date" placeholder="{{ book.due_date }}">
+        <input type="date" class="form-control" name="due_date" value="{{ book.due_date }}">
     </div>
     {% endif %}
     <button class="btn btn-primary" type="submit" value="Submit">Enter</button>
