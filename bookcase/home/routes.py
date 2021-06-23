@@ -10,5 +10,5 @@ def dashboard():
     books = db.session.query(models.Book.title, models.Book.due_date, 
     models.Borrower.fname, models.Borrower.lname, models.Borrower.borrowerId).\
         join(models.Borrower, models.Book.borrower_id == models.Borrower.borrowerId).\
-            filter(models.Book.due_date < datetime.now()).all()
+            filter(models.Book.overdue == True).all()
     return render_template('dashboard.html', user=current_user, books=books)

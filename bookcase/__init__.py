@@ -3,23 +3,22 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 import os.path
 from flask_login import LoginManager
-from .schedules import overdue_check
+from config import Config
 
 db = SQLAlchemy()
 
-def create_app(test_config=None):
+def create_app(test_config=None, config_class=Config):
     app = Flask(__name__, instance_relative_config=True)
-    app.config.from_mapping(
-        #FIXME: Remember to change this to something more secure when deploying.
-        SECRET_KEY='123'
-    )
+    app.config.from_object(Config)
     app.config['TESTING'] = True
     app.config['SQLALCHEMY_ECHO'] = True
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///bookcase.db'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
     db.app = app
-    db.init_app(app) 
-    
+    db.init_app(app)
+    scheduler.init_app(app)
+    scheduler.start() 
+
     login_manager = LoginManager()
     login_manager.init_app(app)
     login_manager.login_view = 'auth_bp.login'
@@ -62,3 +61,4 @@ def create_app(test_config=None):
 
 
 
+from bookcase.task import scheduler
