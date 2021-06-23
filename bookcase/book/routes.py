@@ -1,6 +1,6 @@
 from flask import render_template, request, redirect, url_for, flash
 from flask_login import current_user, login_required
-from bookcase.models import Book, Borrower
+from bookcase.models import Book, Author, Borrower
 from bookcase import db
 from datetime import datetime, timedelta
 from . import book_bp
