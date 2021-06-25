@@ -18,7 +18,8 @@ def bookcase():
 @login_required
 def book_profile(isbn):
     book = db.session.query(Book).filter_by(isbn=isbn).first()
-    return render_template('book-profile.html', user=current_user, book=book)
+    authors = book.authors
+    return render_template('book-profile.html', user=current_user, book=book, authors=authors)
 
 @book_bp.route('/add-book', methods=['GET', 'POST'])
 @login_required
@@ -26,6 +27,7 @@ def add_book():
     if request.method == 'POST':
         title = request.form['title']
         isbn = request.form['isbn']
+        author = request.form['name']
         price = request.form['price']
         if len(isbn) != 13:
             flash('ISBN is not 13 characters')
@@ -33,9 +35,21 @@ def add_book():
             flash('Please enter book title')
         elif bool(db.session.query(Book.isbn).filter_by(isbn=isbn).first()) == True:
             flash('Book already exists', category='error')
-        else:
+        elif len(author) < 1:
+            flash('Please enter author name', category='error')
+        else: 
+            new_author = Author(name=author)
+            author_exist = db.session.query(Author).filter_by(name=author).first()
+            if len(price) < 1:
+                price = None
             new_book = Book(title=title, isbn=isbn, bookprice=price)
             db.session.add(new_book)
+            db.session.commit()
+            if not author_exist:
+                db.session.add(new_author)
+                new_book.authors.append(new_author)
+            else:
+                new_book.authors.append(author_exist)
             db.session.commit()
             return redirect(url_for('budget_bp.decrease_remaining', isbn=new_book.isbn))
     return render_template('addbook.html', user=current_user)
@@ -72,6 +86,10 @@ def update_book(isbn):
 @login_required
 def delete_book(isbn):
     book = db.session.query(Book).filter_by(isbn=isbn).first()
+    authors = book.authors
+    for author in authors:
+        if len(author.books) <= 1:
+            db.session.delete(author)
     current_user.bud_remaining = current_user.bud_remaining + book.bookprice
     db.session.delete(book)
     db.session.commit()

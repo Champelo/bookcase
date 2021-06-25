@@ -31,7 +31,6 @@ def delete_budget():
     db.session.commit()
     return redirect(url_for('budget_bp.budget_home'))
 
-
 @budget_bp.route('/spending-log')
 @login_required
 def spending_log():

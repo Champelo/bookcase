@@ -3,8 +3,8 @@ from flask_login import UserMixin
 from datetime import datetime
 
 booksauthors = db.Table('booksauthors', 
-                db.Column('author_id', db.Integer, db.ForeignKey('author.id'), primary_key=True),
-                db.Column('book_isbn', db.Integer, db.ForeignKey('book.isbn'), primary_key=True))
+                db.Column('book_isbn', db.Integer, db.ForeignKey('book.isbn'), primary_key=True),
+                db.Column('author_id', db.Integer(), db.ForeignKey('author.id'), primary_key=True))
 
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
@@ -23,10 +23,8 @@ class Book(db.Model):
     overdue = db.Column(db.Boolean, default=False)
     borrower_id = db.Column(db.Integer, db.ForeignKey('borrower.borrowerId'))
     borrower = db.relationship('Borrower')
-    authors = db.relationship('Author', secondary=booksauthors, lazy='subquery',
-    backref=db.backref('books', lazy=True))
+   
     
-
 class Borrower(db.Model):
     borrowerId = db.Column(db.Integer, primary_key=True)
     fname = db.Column(db.String(), nullable=False)
@@ -35,5 +33,7 @@ class Borrower(db.Model):
     book = db.relationship('Book', back_populates='borrower')
 
 class Author(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(), nullable=False)
+    id = db.Column(db.Integer(), primary_key=True)
+    name = db.Column(db.String(), default='Unknown')
+    books = db.relationship('Book', secondary=booksauthors, lazy='subquery',
+    backref=db.backref('authors', lazy=True))
