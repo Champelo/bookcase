@@ -3,7 +3,7 @@ from flask_login import UserMixin
 from datetime import datetime
 
 booksauthors = db.Table('booksauthors', 
-                db.Column('book_isbn', db.Integer, db.ForeignKey('book.isbn'), primary_key=True),
+                db.Column('book_isbn', db.String(), db.ForeignKey('book.isbn'), primary_key=True),
                 db.Column('author_id', db.Integer(), db.ForeignKey('author.id'), primary_key=True))
 
 class User(db.Model, UserMixin):

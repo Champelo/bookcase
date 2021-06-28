@@ -4,6 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 import os.path
 from flask_login import LoginManager
 from config import Config
+from flask_migrate import Migrate
 
 db = SQLAlchemy()
 
@@ -12,10 +13,11 @@ def create_app(test_config=None, config_class=Config):
     app.config.from_object(Config)
     app.config['TESTING'] = True
     app.config['SQLALCHEMY_ECHO'] = True
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///bookcase.db'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
+    migrate = Migrate(app, db)
     db.app = app
     db.init_app(app)
+    migrate.init_app(app, db)
     scheduler.init_app(app)
     scheduler.start() 
 
