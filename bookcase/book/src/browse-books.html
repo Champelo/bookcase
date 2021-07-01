@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}View Bookcase{% endblock %}
+
+{% block content %}
+<h1 align='center'>Bookcase</h1>
+<ul>
+    {% for book in books %}
+        <div>
+            {% for identifier in book["volumeInfo"]["industryIdentifiers"] %}
+                {% if identifier["type"] == "ISBN_13" %}
+                    {% set profile = "http://127.0.0.1:5000/bookcase/gbook-profile?link=" + book["selfLink"] %}
+                    <a href="{{ profile }}">{{ book['volumeInfo']['title'] }}</a>
+                    {% for author in book["volumeInfo"]["authors"] %}
+                        <p>{{ author }}</p>
+                    {% endfor %}  
+                {% endif %}
+            {% endfor %}
+        </div>
+    {% endfor %}
+</ul>
+{% endblock %}

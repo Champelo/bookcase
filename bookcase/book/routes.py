@@ -5,6 +5,8 @@ from bookcase import db
 from datetime import datetime, timedelta
 from . import book_bp
 from decimal import Decimal
+from config import consumer_key
+import requests
 
 
 
@@ -21,39 +23,56 @@ def book_profile(isbn):
     authors = book.authors
     return render_template('book-profile.html', user=current_user, book=book, authors=authors)
 
+@book_bp.route('/browse-books')
+@login_required
+def browse_books():
+    response = requests.get('https://www.googleapis.com/books/v1/volumes?q=The Cat in the Hat&orderBy=relevance&key=' + consumer_key)
+    if response.status_code != 200:
+        print('Error')
+    data = response.json()
+    books = data['items']
+    return render_template('browse-books.html', user=current_user, books=books)
+
+@book_bp.route('/gbook-profile', methods=['GET', 'POST'])
+@login_required
+def gbook_profile():
+    link = request.args.get('link')
+    response = requests.get(link)
+    if response.status_code != 200:
+        print('Error')
+    data = response.json()
+    return render_template('gbook-profile.html', user=current_user, data=data)
+
 @book_bp.route('/add-book', methods=['GET', 'POST'])
 @login_required
 def add_book():
-    if request.method == 'POST':
-        title = request.form['title']
-        isbn = request.form['isbn']
-        author = request.form['name']
-        price = request.form['price']
-        if len(isbn) != 13:
-            flash('ISBN is not 13 characters')
-        elif len(title) < 1:
-            flash('Please enter book title')
-        elif bool(db.session.query(Book.isbn).filter_by(isbn=isbn).first()) == True:
-            flash('Book already exists', category='error')
-        elif len(author) < 1:
-            flash('Please enter author name', category='error')
-        else: 
-            new_author = Author(name=author)
-            author_exist = db.session.query(Author).filter_by(name=author).first()
-            if len(price) < 1:
-                price = None
-            new_book = Book(title=title, isbn=isbn, bookprice=price)
-            db.session.add(new_book)
-            db.session.commit()
-            if not author_exist:
-                db.session.add(new_author)
-                new_book.authors.append(new_author)
-            else:
-                new_book.authors.append(author_exist)
-            db.session.commit()
-            return redirect(url_for('budget_bp.decrease_remaining', isbn=new_book.isbn))
-    return render_template('addbook.html', user=current_user)
-
+    link = request.args.get('link')
+    response = requests.get(link)
+    if response.status_code != 200:
+        print('Error')
+    data = response.json()
+    book = data['volumeInfo']
+    title = book['title']
+    for isbn in book['industryIdentifiers']:
+        if isbn['type'] == 'ISBN_13':
+            isbn = isbn['identifier']
+    authors = book['authors']
+    price = None
+    new_book = Book(title=title, isbn=isbn, bookprice=price)
+    db.session.add(new_book)
+    db.session.commit()
+    for author in authors:
+        new_author = Author(name=author)
+        author_exist = db.session.query(Author).filter_by(name=author).first()
+        db.session.commit()
+        if not author_exist:
+            db.session.add(new_author)
+            new_book.authors.append(new_author)
+        else:
+            new_book.authors.append(author_exist)
+    db.session.commit()
+    return redirect('http://127.0.0.1:5000/bookcase/gbook-profile?link=' +  data['selfLink'])
+    
 @book_bp.route('/update-book/<string:isbn>', methods=['GET', 'POST'])
 @login_required
 def update_book(isbn):

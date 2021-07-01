@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}Update{% endblock %}
+{% block content %}
+    <div align="center">
+        {% set book = data["volumeInfo"] %}
+        <h1>{{ book["title"] }}</h1>
+        <p>Authors:</p>
+        {% for author in book["authors"] %}
+            <p>{{ author }}</p>
+        {% endfor %}
+        {% for identifier in book["industryIdentifiers"] %}
+            {% if identifier["type"] == "ISBN_13" %}
+                <p>{{ identifier["identifier"] }}</p>
+            {% endif %}
+        {% endfor %}  
+        <div>
+            <p>{{ book["description"] }}</p>
+        </div>    
+    </div>
+   <div>
+        {% set profile = "http://127.0.0.1:5000/bookcase/add-book?link=" + data["selfLink"] %}
+       <a href="{{ profile }}">Add Book</a>
+   </div>
+
+
+    
+{% endblock %}
