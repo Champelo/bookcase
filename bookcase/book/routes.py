@@ -23,14 +23,19 @@ def book_profile(isbn):
     authors = book.authors
     return render_template('book-profile.html', user=current_user, book=book, authors=authors)
 
-@book_bp.route('/browse-books')
+@book_bp.route('/browse-books', methods=['GET', 'POST'])
 @login_required
 def browse_books():
-    response = requests.get('https://www.googleapis.com/books/v1/volumes?q=The Cat in the Hat&orderBy=relevance&key=' + consumer_key)
-    if response.status_code != 200:
-        print('Error')
-    data = response.json()
-    books = data['items']
+    books = []
+    if request.method == 'POST':
+        page = request.args.get('page', 1, type=int)
+        q = request.form['q']
+        response = requests.get('https://www.googleapis.com/books/v1/volumes?q=' + q + 
+        '&orderBy=relevance&startIndex=' + page + '&key=' + consumer_key)
+        if response.status_code != 200:
+            print('Error')
+        data = response.json()
+        books = data['items']
     return render_template('browse-books.html', user=current_user, books=books)
 
 @book_bp.route('/gbook-profile', methods=['GET', 'POST'])
