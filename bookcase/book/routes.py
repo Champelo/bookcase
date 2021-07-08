@@ -7,7 +7,7 @@ from . import book_bp
 from decimal import Decimal
 from config import consumer_key
 import requests
-
+from bookcase.forms.fields import UpdateBookForm
 
 
 @book_bp.route('/')
@@ -77,29 +77,24 @@ def add_book():
 @login_required
 def update_book(isbn):
     book = db.session.query(Book).filter_by(isbn=isbn).first()
-    if request.method == 'POST':
-        bookprice = request.form['bookprice']
-        if book.bookprice < Decimal(bookprice):
-            pricediff = Decimal(bookprice) - book.bookprice
+    form = UpdateBookForm()
+    if form.validate_on_submit():
+        if book.bookprice < Decimal(form.bookprice.data):
+            pricediff = Decimal(form.bookprice.data) - book.bookprice
             current_user.bud_remaining = current_user.bud_remaining - pricediff
-        elif book.bookprice > Decimal(bookprice):
-            pricediff = book.bookprice - Decimal(bookprice)
+        elif book.bookprice > Decimal(form.bookprice.data):
+            pricediff = book.bookprice - Decimal(form.bookprice.data)
             current_user.bud_remaining = current_user.bud_remaining + pricediff
-        book.bookprice = bookprice
+        book.bookprice = form.bookprice.data
         if book.due_date is not None:
-            due_date = request.form['due_date']
-            date = datetime.strptime(due_date, '%Y-%m-%d').date()
-
-            if date < datetime.now().date() and date != book.due_date:
-                flash("Date has to after today", category='error')
-            else:
-                book.due_date = date
-                if date >= datetime.now().date():
-                    book.overdue = False
+            # date = datetime.strptime(due_date, '%Y-%m-%d').date()
+            book.due_date = form.date.data
+            if form.date.data >= datetime.now().date():
+                book.overdue = False
         db.session.commit()
         return redirect(url_for('book_bp.book_profile', isbn=isbn))
     
-    return render_template('update-book.html', user=current_user, book=book)
+    return render_template('update-book.html', user=current_user, book=book, form=form)
 
 @book_bp.route('/delete-book/<string:isbn>', methods=['GET', 'POST'])
 @login_required

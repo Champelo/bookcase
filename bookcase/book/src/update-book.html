@@ -4,16 +4,26 @@
 
 {% block content %}
 <h1>Update</h1>
-
-<form method="post">
+<form method="post" action="{{ url_for('book_bp.update_book', isbn=book.isbn) }}">
     <div class="form-group">
-        <label for="bookprice">Price</label>
-        <input type="text" class="form-control" name="bookprice" value="{{ book.bookprice }}">
+        {{ form.csrf_token }}
+        {{ form.bookprice.label }}
+        {{ form.bookprice }}
+        <div>
+            {% for error in form.bookprice.errors %}
+                <p>{{ error }}</p>
+            {% endfor %}
+        </div>
     </div>
     {% if book.due_date is not none %}
     <div class="form-group">
-        <label for="due_date">Due Date</label>
-        <input type="date" class="form-control" name="due_date" value="{{ book.due_date }}">
+        {{ form.date.label }}
+        {{ form.date }}
+        <div>
+            {% for error in form.date.errors %}
+                <p>{{ error }}</p>
+            {% endfor %}
+        </div>
     </div>
     {% endif %}
     <button class="btn btn-primary" type="submit" value="Submit">Enter</button>

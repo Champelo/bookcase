@@ -1,6 +1,7 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField
-from wtforms.validators import DataRequired, Length, ValidationError, Email, EqualTo
+from wtforms import StringField, PasswordField, DecimalField, DateField
+from wtforms.validators import DataRequired, Length, NumberRange, ValidationError, Email, EqualTo
+from datetime import datetime
 from bookcase import models, db
 
 
@@ -28,3 +29,12 @@ class SignupForm(FlaskForm):
         user = db.session.query(models.User.email).filter_by(email=email.data).first()
         if user:
             raise ValidationError('Email is already used on a account. Please try another email or click forgot password.')
+
+class UpdateBookForm(FlaskForm):
+    bookprice = DecimalField('Price', places=2, validators=[DataRequired(), NumberRange(0, message='Please enter a number non-negative number')])
+    #Check if the book is checked out to see if this field should be included in the form
+    # date = DateField('Date', format='%Y-%m-%d', validators=[DataRequired()])
+
+    # def validate_date(self, date):
+    #     if date.data < datetime.now().date():
+    #         raise ValidationError('Date has to after today')
