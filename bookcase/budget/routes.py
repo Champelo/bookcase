@@ -19,6 +19,7 @@ def change_budget():
         current_user.budget = budget
         current_user.bud_remaining = Decimal(budget) - newbudprice
         db.session.commit()
+        db.session.close()
         return redirect(url_for('budget_bp.budget_home'))
 
     return render_template('change-budget.html', user=current_user)
@@ -29,12 +30,14 @@ def delete_budget():
     current_user.budget = 0.00
     current_user.bud_remaining = 0.00
     db.session.commit()
+    db.session.close()
     return redirect(url_for('budget_bp.budget_home'))
 
 @budget_bp.route('/spending-log')
 @login_required
 def spending_log():
     books = db.session.query(models.Book)
+    db.session.close()
     return render_template('spending-log.html', user=current_user, books=books)
 
 @budget_bp.route('/decrease-remaining/<string:isbn>')
@@ -43,6 +46,7 @@ def decrease_remaining(isbn):
     book = db.session.query(models.Book).filter_by(isbn=isbn).first()
     current_user.bud_remaining = current_user.bud_remaining - book.bookprice
     db.session.commit()
+    db.session.close()
     return redirect(url_for('book_bp.bookcase'))
 
 

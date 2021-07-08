@@ -11,11 +11,13 @@ class LoginForm(FlaskForm):
 
     def validate_email(self, email):
         user = db.session.query(models.User.email).filter_by(email=email.data).first()
+        db.session.close()
         if not user:
             raise ValidationError('Email does not exist. Please try again.')
     
     def validate_password(self, password):
         user = db.session.query(models.User.password).filter_by(password=password.data).first()
+        db.session.close()
         if not user:
             raise ValidationError('Incorrect password. Please try again.')
 
@@ -27,8 +29,10 @@ class SignupForm(FlaskForm):
 
     def validate_email(self, email):
         user = db.session.query(models.User.email).filter_by(email=email.data).first()
+        db.session.close()
         if user:
             raise ValidationError('Email is already used on a account. Please try another email or click forgot password.')
+        
 
 class UpdateBookForm(FlaskForm):
     bookprice = DecimalField('Price', places=2, validators=[DataRequired(), NumberRange(0, message='Please enter a number non-negative number')])

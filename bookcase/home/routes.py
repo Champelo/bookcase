@@ -11,4 +11,5 @@ def dashboard():
     models.Borrower.fname, models.Borrower.lname, models.Borrower.borrowerId).\
         join(models.Borrower, models.Book.borrower_id == models.Borrower.borrowerId).\
             filter(models.Book.overdue == True).all()
+    db.session.close()
     return render_template('dashboard.html', user=current_user, books=books)
