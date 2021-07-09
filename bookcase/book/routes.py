@@ -1,4 +1,4 @@
-from flask import render_template, request, redirect, url_for, flash
+from flask import render_template, request, redirect, url_for, flash, session
 from flask_login import current_user, login_required
 from bookcase.models import Book, Author, Borrower
 from bookcase import db
@@ -23,14 +23,26 @@ def book_profile(isbn):
     authors = book.authors
     return render_template('book-profile.html', user=current_user, book=book, authors=authors)
 
-@book_bp.route('/browse-books')
+@book_bp.route('/browse-books', methods=['GET', 'POST'])
 @login_required
 def browse_books():
-    response = requests.get('https://www.googleapis.com/books/v1/volumes?q=The Cat in the Hat&orderBy=relevance&key=' + consumer_key)
-    if response.status_code != 200:
-        print('Error')
-    data = response.json()
-    books = data['items']
+    books = []
+    next_page = False
+    if 'gbook_q' in session:
+        q = session['gbook_q']
+        next_page = True
+    if request.method == 'POST' or next_page:
+        if 'gbook_q' not in session:
+            q = request.form['q']
+            session['gbook_q'] = q
+        page = request.args.get('page', 1, type=int)
+        response = requests.get('https://www.googleapis.com/books/v1/volumes?q=' + q + 
+        '&orderBy=relevance&startIndex=' + str(page) + '&key=' + consumer_key)
+        if response.status_code != 200:
+            print('Error')
+        data = response.json()
+        books = data['items']
+        next_page = False
     return render_template('browse-books.html', user=current_user, books=books)
 
 @book_bp.route('/gbook-profile', methods=['GET', 'POST'])
