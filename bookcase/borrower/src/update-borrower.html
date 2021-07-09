@@ -5,14 +5,25 @@
 {% block content %}
 <h1>Update</h1>
 
-<form method="post">
+<form method="post" action="{{ url_for('borrower_bp.update_borrower', borrowerID=borrower.borrowerId) }}">
+    {{ form.csrf_token }}
     <div class="form-group">
-        <label for="fname">First Name</label>
-        <input type="text" class="form-control" name="fname" value="{{ borrower.fname }}">
+        {{ form.fname.label }}
+        {{ form.fname }}
+        <div>
+            {% for error in form.fname.errors %}
+                <p>{{ error }}</p>
+            {% endfor %}
+        </div>
     </div>
     <div class="form-group">
-        <label for="lname">Last Name</label>
-        <input type="text" class="form-control" name="lname"  value="{{ borrower.lname }}">
+        {{ form.lname.label }}
+        {{ form.lname }}
+        <div>
+            {% for error in form.lname.errors %}
+                <p>{{ error }}</p>
+            {% endfor %}
+        </div>
     </div>
     <button class="btn btn-primary" type="submit" value="Submit">Enter</button>
 </form>

@@ -7,7 +7,7 @@ from . import book_bp
 from decimal import Decimal
 from config import consumer_key
 import requests
-from bookcase.forms.fields import UpdateDueDate
+from bookcase.forms.fields import DueDateForm
 
 
 @book_bp.route('/')
@@ -77,7 +77,7 @@ def add_book():
 @login_required
 def update_duedate(isbn):
     book = db.session.query(Book).filter_by(isbn=isbn).first()
-    form = UpdateDueDate()
+    form = DueDateForm()
     if form.validate_on_submit():
         # date = datetime.strptime(due_date, '%Y-%m-%d').date()
         book.due_date = form.date.data

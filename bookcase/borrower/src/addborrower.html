@@ -4,14 +4,25 @@
 
 {% block content %}
     <h3 align="center">Add Borrower</h3>
-    <form method="post">
+    <form method="post" action="{{ url_for('borrower_bp.add_borrower') }}">
+        {{ form.csrf_token }}
         <div class="form-group">
-            <label for="fname">First Name</label>
-            <input type="text" class="form-control" name="fname" placeholder="Enter first name">
+            {{ form.fname.label }}
+            {{ form.fname }}
+            <div>
+                {% for error in form.fname.errors %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+            </div>
         </div>
         <div class="form-group">
-            <label for="lname">Last Name</label>
-            <input type="text" class="form-control" name="lname" placeholder="Enter last name">
+            {{ form.lname.label }}
+            {{ form.lname }}
+            <div>
+                {% for error in form.lname.errors %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+            </div>
         </div>
         <button class="btn btn-primary" type="submit" value="Submit">Enter</button>
     </form>

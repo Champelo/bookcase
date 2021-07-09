@@ -34,16 +34,19 @@ class SignupForm(FlaskForm):
         if user:
             raise ValidationError('Email is already used on a account. Please try another email or click forgot password.')
         
-
-class UpdateBookPrice(FlaskForm):
+class BudgetForm(FlaskForm):
     bookprice = DecimalField('Price', places=2, 
-        validators=[DataRequired(), NumberRange(0, message='Please enter a number non-negative number')])
-   
-   
-
-class UpdateDueDate(FlaskForm):
+        validators=[DataRequired(), NumberRange(-1, message='Please enter a number non-negative number')])
+     
+class DueDateForm(FlaskForm):
     date = DateField('Date', format='%Y-%m-%d', validators=[DataRequired()])
 
     def validate_date(self, date):
         if date.data < datetime.now().date():
             raise ValidationError('Date has to after today')
+
+class BorrowerForm(FlaskForm):
+    fname= StringField('First Name', 
+        validators=[DataRequired(), Length(min=1, max=100, message='Please enter a name between 1 and 100')])
+    lname= StringField('Last Name', 
+        validators=[DataRequired(), Length(min=1, max=100, message='Please enter a name between 1 and 100')])

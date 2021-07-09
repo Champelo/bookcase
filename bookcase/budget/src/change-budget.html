@@ -4,10 +4,16 @@
 
 {% block content %}
     <h1>Change Budget</h1>
-    <form method="post">
+    <form method="post" action="{{ url_for('budget_bp.change_budget') }}">
+        {{ form.csrf_token }}
         <div class="form-group">
-            <label for="budget">Budget</label>
-            <input type="number" class="form-control" name="budget" value="{{ current_user.budget }}" step="0.01" min = "0">
+            {{ form.bookprice.label }}
+            {{ form.bookprice }}
+            <div>
+                {% for error in form.bookprice.errors %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+            </div>
         </div>
         <button class="btn btn-primary" type="submit" value="Submit">Enter</button>
     </form>

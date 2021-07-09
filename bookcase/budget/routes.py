@@ -1,10 +1,10 @@
-from flask import render_template, request, redirect, url_for, flash
+from flask import render_template, request, redirect, url_for
 from flask_login import current_user, login_required
 from bookcase.models import Book
 from bookcase import db
 from . import budget_bp
 from decimal import Decimal
-from bookcase.forms.fields import UpdateBookPrice
+from bookcase.forms.fields import BudgetForm
 
 @budget_bp.route('/')
 @login_required
@@ -14,15 +14,16 @@ def budget_home():
 @budget_bp.route('/change-budget', methods=['GET', 'POST'])
 @login_required
 def change_budget():
-    if request.method == 'POST':
-        budget = request.form['budget']
+    form = BudgetForm()
+    if form.validate_on_submit():
+        budget = form.bookprice.data
         newbudprice = current_user.budget - current_user.bud_remaining
         current_user.budget = budget
         current_user.bud_remaining = Decimal(budget) - newbudprice
         db.session.commit()
         return redirect(url_for('budget_bp.budget_home'))
 
-    return render_template('change-budget.html', user=current_user)
+    return render_template('change-budget.html', user=current_user, form=form)
 
 @budget_bp.route('/delete-budget', methods=['GET'])
 @login_required
@@ -50,15 +51,16 @@ def decrease_remaining(isbn):
 @login_required
 def update_bookprice(isbn):
     book = db.session.query(Book).filter_by(isbn=isbn).first()
-    form = UpdateBookPrice()
+    form = BudgetForm()
     if form.validate_on_submit():
-        if book.bookprice < Decimal(form.bookprice.data):
-            pricediff = Decimal(form.bookprice.data) - book.bookprice
+        new_price = Decimal(form.bookprice.data)
+        if book.bookprice < new_price:
+            pricediff = new_price - book.bookprice
             current_user.bud_remaining = current_user.bud_remaining - pricediff
-        elif book.bookprice > Decimal(form.bookprice.data):
-            pricediff = book.bookprice - Decimal(form.bookprice.data)
+        elif book.bookprice > new_price:
+            pricediff = book.bookprice - new_price
             current_user.bud_remaining = current_user.bud_remaining + pricediff
-        book.bookprice = form.bookprice.data
+        book.bookprice = new_price
         db.session.commit()
         return redirect(url_for('budget_bp.spending_log'))
     
