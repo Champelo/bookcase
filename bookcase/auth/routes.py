@@ -11,7 +11,6 @@ def login():
     if form.validate_on_submit():
         user = db.session.query(models.User).filter_by(email=form.email.data).first()
         login_user(user)
-        db.session.close()
         return redirect(url_for('home_bp.dashboard'))
     return render_template('login.html', user=current_user, form=form)
 
@@ -30,6 +29,5 @@ def sign_up():
         db.session.add(new_user)
         db.session.commit()
         login_user(new_user)
-        db.session.close()
         return redirect(url_for('home_bp.dashboard'))
     return render_template('sign-up.html', form=form)

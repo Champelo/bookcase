@@ -23,9 +23,10 @@ class LoginForm(FlaskForm):
 
 class SignupForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired(), Email()])
-    password = PasswordField('Password', validators=[DataRequired(), 
-        Length(min=5, max=20, message='Please enter a password that is greater than 5')])
-    confirm_password = PasswordField('Confirm password', validators=[DataRequired(), EqualTo('password', message='Passwords do not match.')])
+    password = PasswordField('Password', 
+        validators=[DataRequired(), Length(min=5, max=20, message='Please enter a password that is greater than 5')])
+    confirm_password = PasswordField('Confirm password', 
+        validators=[DataRequired(), EqualTo('password', message='Passwords do not match.')])
 
     def validate_email(self, email):
         user = db.session.query(models.User.email).filter_by(email=email.data).first()
@@ -34,11 +35,15 @@ class SignupForm(FlaskForm):
             raise ValidationError('Email is already used on a account. Please try another email or click forgot password.')
         
 
-class UpdateBookForm(FlaskForm):
-    bookprice = DecimalField('Price', places=2, validators=[DataRequired(), NumberRange(0, message='Please enter a number non-negative number')])
-    #Check if the book is checked out to see if this field should be included in the form
-    # date = DateField('Date', format='%Y-%m-%d', validators=[DataRequired()])
+class UpdateBookPrice(FlaskForm):
+    bookprice = DecimalField('Price', places=2, 
+        validators=[DataRequired(), NumberRange(0, message='Please enter a number non-negative number')])
+   
+   
 
-    # def validate_date(self, date):
-    #     if date.data < datetime.now().date():
-    #         raise ValidationError('Date has to after today')
+class UpdateDueDate(FlaskForm):
+    date = DateField('Date', format='%Y-%m-%d', validators=[DataRequired()])
+
+    def validate_date(self, date):
+        if date.data < datetime.now().date():
+            raise ValidationError('Date has to after today')

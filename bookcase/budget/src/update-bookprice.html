@@ -1,10 +1,10 @@
 {% extends "base.html" %}
 
-{% block title %}Update{% endblock %}
+{% block title %}Update Price{% endblock %}
 
 {% block content %}
-<h1>Update</h1>
-<form method="post" action="{{ url_for('book_bp.update_book', isbn=book.isbn) }}">
+<h1>Update Price</h1>
+<form method="post" action="{{ url_for('budget_bp.update_bookprice', isbn=book.isbn) }}">
     <div class="form-group">
         {{ form.csrf_token }}
         {{ form.bookprice.label }}
@@ -15,17 +15,6 @@
             {% endfor %}
         </div>
     </div>
-    {% if book.due_date is not none %}
-    <div class="form-group">
-        {{ form.date.label }}
-        {{ form.date }}
-        <div>
-            {% for error in form.date.errors %}
-                <p>{{ error }}</p>
-            {% endfor %}
-        </div>
-    </div>
-    {% endif %}
     <button class="btn btn-primary" type="submit" value="Submit">Enter</button>
 </form>
 
