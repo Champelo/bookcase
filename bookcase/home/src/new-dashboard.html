@@ -1,0 +1,64 @@
+{% extends "header-img.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block greeting %}
+<div id="intro-img" style="background-image: url('../static/asset/images/ella-jardim-M0zs81FNm6s-unsplash.jpg');">
+    <h1 id="h1-intro">
+        Welcome User!
+    </h1>
+</div>
+{% endblock %}
+
+{% block content %}
+<main id="dashboard-main">
+    <section id="due-soon">
+        <div class="dashboard-header">
+            <h2 class="dashboard-header--text">Due Soon:</h2>
+        </div>
+        <div id="due-soon__info">
+            <section id="due-soon__date">
+                <div class="due-soon__date__month">
+                    <h3>December</h3>
+                </div>
+                <div class="due-soon__date__day">
+                    <h3>01</h3>
+                </div>
+            </section>
+            <section id="due-soon__books">
+                {% if duesoon %}
+                    {% for book in duesoon %}
+                    <div class="card">
+                        <div class="card__info card__info--left">
+                            <a href="{{ url_for('book_bp.book_profile', isbn=book.isbn) }}" class="card__info__title card__info__text">{{ book.title }}</a>
+                            <p class="card__info__subtitle card__info__text">Borrower: {{ book.fname }} {{ book.lname }}</p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <p>No books are due</p>
+                {% endif %}
+            </section>
+        </div>
+    </section>
+    <section id="overdue">
+        <div class="dashboard-header">
+            <h2 class="dashboard-header--text">Overdue:</h2>
+        </div>
+        <section id="overdue__books">
+            {% if overdue %}
+                    {% for book in overdue%}
+                    <div class="card">
+                        <div class="card__info card__info--left">
+                            <a href="{{ url_for('book_bp.book_profile', isbn=book.isbn) }}" class="card__info__title card__info__text">{{ book.title }}</a>
+                            <p class="card__info__subtitle card__info__text">Borrower: {{ book.fname }} {{book.lname }}</p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <p>No books are overdue</p>
+                {% endif %}
+        </section>
+    </section>
+</main>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends "base-redo.html" %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<div class="div__main-body">
+    <div class="image__login"></div>
+    <div class="div__login-signup">
+        <h1 class="text_white h3__landing-greeting">Welcome Back!</h1>
+        <form>
+            <div class="form__input" style="margin-left: 30px;">
+                <label for="email" class="text_white">Email:</label><br>
+                <input type="text" id="email" name="email">
+            </div><br>
+            <div class="form__input" style="margin-bottom: 30px;"> 
+                <label for="password" class="text_white">Password:</label><br>
+                <input type="text" id="password" name="password">
+            </div><br>
+            <button style="margin-left: 150px;">Login</button>
+        </form><br>
+        <a class="text_white" href="#" style="margin-left:50px;">Forgot Password?</a>
+        <a class="text_white" href="sign-up.html" style="margin-left:50px; font-weight:bold;">Create New Account?</a>
+    </div>
+</div>
+{% endblock %}

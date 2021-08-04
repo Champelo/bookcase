@@ -1,20 +1,25 @@
 from flask import render_template, request, redirect, url_for, flash, session
 from flask_login import current_user, login_required
-from bookcase.models import Book, Author, Borrower
-from bookcase import db
 from datetime import datetime, timedelta
-from . import book_bp
-from decimal import Decimal
-from config import consumer_key
 import requests
+from bookcase import db
+from . import book_bp
+from bookcase.models import Book, Author, Borrower, booksauthors
 from bookcase.forms.fields import DueDateForm
+from config import consumer_key
+
 
 
 @book_bp.route('/')
 @login_required
 def bookcase():
-    book_case = db.session.query(Book)
-    return render_template('view-bookcase.html', user=current_user, book_case=book_case)
+    # bookcase = booksauthors.select(Book.title, Book.isbn, Author.name).\
+    #     join(Book, Book.isbn == booksauthors.c.book_isbn).\
+    #         join(Author, Author.id == booksauthors.c.author_id)
+    bookcase = db.session.query(Book.title, Book.isbn, Author.name).\
+    join(booksauthors, booksauthors.c.book_isbn == Book.isbn).\
+        join(Author, booksauthors.c.author_id == Author.id)
+    return render_template('new-view-bookcase.html', user=current_user, bookcase=bookcase)
 
 @book_bp.route('/book-profile/<string:isbn>')
 @login_required

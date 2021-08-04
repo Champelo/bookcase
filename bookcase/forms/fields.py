@@ -50,3 +50,4 @@ class BorrowerForm(FlaskForm):
         validators=[DataRequired(), Length(min=1, max=100, message='Please enter a name between 1 and 100')])
     lname= StringField('Last Name', 
         validators=[DataRequired(), Length(min=1, max=100, message='Please enter a name between 1 and 100')])
+

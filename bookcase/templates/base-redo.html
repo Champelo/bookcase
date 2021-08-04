@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Philosopher:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+        {% assets "scss" %}
+        <link rel="stylesheet" href="{{ ASSET_URL }}">
+        {% endassets %}
+        <title>{% block title %}{% endblock %} - Bookcase</title>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <ul class=flashes>
+                    {% for category, message in messages %}
+                    <li class="{{ category }}">{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+    </head>
+    <body>
+        <header>
+            <div id="nav-bar">    
+                <a id="logo" href="{{ url_for('home_bp.dashboard') }}">Bookcase</a> 
+                <ul id="nav-bar__list">
+                    {% if current_user.is_authenticated %}
+                            <li class="nav-bar__item"><a class="nav-bar__link" href="{{ url_for('book_bp.bookcase') }}">My Bookcase</a></li>
+                            <li class="nav-bar__item"><a class="nav-bar__link" href="{{ url_for('budget_bp.budget_home') }}">Budget</a></li>
+                            <li class="nav-bar__item"><a class="nav-bar__link" href="{{ url_for('borrower_bp.view_borrowers') }}">Borrowers</a></li>
+                            <li class="nav-bar__item"><a class="nav-bar__link" href="{{ url_for('auth_bp.logout') }}">Logout</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+            {% block header %}
+            {% endblock %}
+        </header>
+        {% block content %}
+        {% endblock %}
+        <footer>
+            <p id="footer__content">Author: Destiny Perine</p>
+        </footer>
+    </body>
+</html>
