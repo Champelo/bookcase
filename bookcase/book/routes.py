@@ -22,12 +22,20 @@ def bookcase():
 @login_required
 def book_profile(isbn):
     book = db.session.query(Book.title, Book.isbn, Book.status,
-    Book.overdue, Book.due_date, Borrower.fname, Borrower.lname, Author.name).\
+    Book.overdue, Author.name).\
         filter_by(isbn=isbn).\
         join(booksauthors, booksauthors.c.book_isbn == Book.isbn).\
             join(Author, booksauthors.c.author_id == Author.id).\
-                join(Borrower, Book.borrower_id == Borrower.borrowerId).\
-                    first()
+                first()
+    if not book.status:
+        book = db.session.query(Book.title, Book.isbn, Book.status,
+        Book.overdue, Book.due_date, Borrower.fname, Borrower.lname, Author.name).\
+            filter_by(isbn=isbn).\
+            join(booksauthors, booksauthors.c.book_isbn == Book.isbn).\
+                join(Author, booksauthors.c.author_id == Author.id).\
+                    join(Borrower, Book.borrower_id == Borrower.borrowerId).\
+                        first()
+    
     return render_template('book-profile.html', user=current_user, book=book)
 
 @book_bp.route('/browse-books', methods=['GET', 'POST'])

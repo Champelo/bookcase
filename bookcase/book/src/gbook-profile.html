@@ -1,29 +1,42 @@
-{% extends "base.html" %}
+{% extends "base-redo.html" %}
 
-{% block title %}Update{% endblock %}
 {% block content %}
-    <a href={{ }}></a>
-    <div align="center">
-        {% set book = data["volumeInfo"] %}
-        <h1>{{ book["title"] }}</h1>
-        <p>Authors:</p>
-        {% for author in book["authors"] %}
-            <p>{{ author }}</p>
-        {% endfor %}
-        {% for identifier in book["industryIdentifiers"] %}
-            {% if identifier["type"] == "ISBN_13" %}
-                <p>{{ identifier["identifier"] }}</p>
+<main id="book-profile__main">
+    {% set book = data["volumeInfo"] %}
+    <div>
+        <a class="profile-links" href="{{ url_for('book_bp.bookcase') }}">Return</a>
+        <div id="book-image">
+            {% if "imageLinks" in book %}
+               <img src="{{ book['imageLinks']['thumbnail'] }}"/>
+            {% else %}
+               <img src="../../static/asset/images/freesia.svg"/>
             {% endif %}
-        {% endfor %}  
-        <div>
-            <p>{{ book["description"] }}</p>
-        </div>    
+        </div>
+        <div class="profile-btn" id="profile-btn--add">
+            {% set profile = "http://127.0.0.1:5000/bookcase/add-book?link=" + data["selfLink"] %}
+            <a href="{{ profile }}">Add Book</a>
+        </div>
     </div>
-   <div>
-        {% set profile = "http://127.0.0.1:5000/bookcase/add-book?link=" + data["selfLink"] %}
-       <a href="{{ profile }}">Add Book</a>
-   </div>
-
-
-    
+    <div id="book-info">
+        <h1>{{ book["title"] }}</h1>
+        <div id="book-info__spans">
+            <span>
+                <p>ISBN:</p>
+                <p>Authors:</p>
+                <p>Description:</p>
+            </span>
+            <span id="book-info__spans--right">
+                {% for identifier in book["industryIdentifiers"] %}
+                    {% if identifier["type"] == "ISBN_13" %}
+                        <p>{{ identifier["identifier"] }}</p>
+                    {% endif %}
+                {% endfor %}
+                {% for author in book["authors"] %}
+                    <p>{{ author }}</p>
+                {% endfor %}
+                <p>{{ book["description"]|striptags }}</p>
+            </span>
+        </div>
+    </div>
+</main>
 {% endblock %}

@@ -1,1 +1,63 @@
 {% extends "header-img.html" %}
+
+{% block title %}Add Book{% endblock %}
+
+{% block greeting %}
+    <div id="intro-img" style="background-image: url('../static/asset/images/carli-jeen-15YDf39RIVc-unsplash.jpg');">
+        <h1 id="h1-intro">
+            Add Book
+        </h1>
+    </div>
+{% endblock %}
+
+{% block content %}
+<main id="main-browsing">
+    <div id="search">
+        <form method="POST" id="search__form"> 
+            <input id = "search__bar" type="text" name="q" placeholder="Search..">
+            <button type="submit" name="submit" value="search">Search</button>
+        </form>
+    </div>
+    <div id="browse-books">
+        <div id="browse-books__options">
+        </div>
+        <div id="browse-books__book-tiles">
+            {% for book in books %}
+                <div class="card">
+                    {% for identifier in book["volumeInfo"]["industryIdentifiers"] %}
+                        {% if identifier["type"] == "ISBN_13" %}
+                            {% if "imageLinks" in book["volumeInfo"] %}
+                            <div class="card__image"><img src="{{ book['volumeInfo']['imageLinks']['smallThumbnail'] }}"/></div>
+                            {% else %}
+                                <div class="card__image"><img src="../../static/asset/images/freesia.svg"/></div>
+                            {% endif %}
+                            <div class="card__info card__info--left">
+                                {% set profile = "http://127.0.0.1:5000/bookcase/gbook-profile?link=" + book['selfLink'] %}
+                                <a href="{{ profile }}" class="card__info__title card__info__text">{{ book['volumeInfo']['title'] }}</a>
+                                <div class="card__info__author">
+                                        <p class="card__info__subtitle card__info__text">
+                                            {% for author in book["volumeInfo"]["authors"] %}
+                                                {% if loop.last %}
+                                                    {{ author }}
+                                                {% else %}
+                                                    {{ author }},
+                                                {% endif %}
+                                            {% endfor %}
+                                        </p>    
+                                </div> 
+                        {% endif %}
+                    {% endfor %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% if books %}
+        <div id="pages">
+            {% for i in range(1, 21) %}
+                <a href="{{ url_for('book_bp.browse_books', page=i) }}">{{ i }}</a>
+            {% endfor %}
+        </div>
+    {% endif %}
+</main>
+{% endblock %}
