@@ -13,7 +13,7 @@ def login():
         user = db.session.query(User).filter_by(email=form.email.data).first()
         login_user(user)
         return redirect(url_for('home_bp.dashboard'))
-    return render_template('login.html', user=current_user, form=form)
+    return render_template('new-login.html', user=current_user, form=form)
 
 @auth_bp.route('/logout')
 @login_required
@@ -31,4 +31,4 @@ def sign_up():
         db.session.commit()
         login_user(new_user)
         return redirect(url_for('home_bp.dashboard'))
-    return render_template('sign-up.html', form=form)
+    return render_template('signup.html', form=form)

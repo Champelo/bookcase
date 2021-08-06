@@ -1,21 +1,22 @@
 {% extends "auth-base.html" %}
 
-{% block title %}Login{% endblock %}
+{% block title %}Sign Up{% endblock %}
 
 {% block left_image %}
-<div id="auth-main--left" style="background-image: url(../../static/asset/images/martin-de-arriba-EuCpEo1BKZQ-unsplash.jpg);">
+<div id="auth-main--left" style="background-image: url(../../static/asset/images/joanna-kosinska-I3adKpDNAjM-unsplash.jpg);">
 </div>
 {% endblock %}
 
-{% block greeting %}Welcome Back!{% endblock %}
+{% block greeting %}Welcome to Bookcase!{% endblock %}
 
 {% block form %}
-<form method="post" action="{{ url_for('auth_bp.login')}}">
+<form method="post" action="{{ url_for('auth_bp.sign_up')}}">
     {{ form.csrf_token }}
     <div id="auth-form">
         <div id="auth-form--labels">
             {{ form.email.label}}
             {{ form.password.label }}
+            {{ form.confirm_password.label }}
         </div>
         <div id="auth-form--input">
             {{ form.email }}
@@ -30,13 +31,18 @@
                     <p>{{ error }}</p>
                 {% endfor %}
             </div>
+            {{ form.confirm_password }}
+            <div>
+                {% for error in form.confirm_password.errors %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+            </div>
         </div>
     </div>
-    <button id="form-btn--standard" type="submit" value="Submit">Login</button>
+    <button id="form-btn--standard" type="submit" value="Submit">Sign Up</button>
 </form>
 {% endblock %}
 
 {% block action_link %}
-<a id="auth__link" href="#">Forgot Password?</a>
-<a id="auth__link" href="{{ url_for('auth_bp.sign_up') }}">Create New Account?</a>
+<a id="auth__link" href="{{ url_for('auth_bp.login') }}">Already have an Account?</a>
 {% endblock %}
