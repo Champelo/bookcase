@@ -39,7 +39,7 @@
         </div>
         {% if book.status %}
         <div class="profile-btn" id="profile-btn--status">
-            <a href="{{ url_for('book_bp.returnBook', isbn=book.isbn) }}">Check Out</a>
+            <a href="{{ url_for('borrower_bp.view_choose_borrower', isbn=book.isbn) }}">Check Out</a>
         </div>
         {% else %}
         <div class="profile-btn" id="profile-btn--status">

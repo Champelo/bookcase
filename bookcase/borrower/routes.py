@@ -8,7 +8,7 @@ from bookcase.forms.fields import BorrowerForm
 @borrower_bp.route('/')
 @login_required
 def view_borrowers():
-    borrowers = db.session.query(Borrower)
+    borrowers = db.session.query(Borrower).order_by(Borrower.fname)
     return render_template('view-borrowers.html', user=current_user, borrowers=borrowers)
 
 @borrower_bp.route('/<int:borrowerID>')

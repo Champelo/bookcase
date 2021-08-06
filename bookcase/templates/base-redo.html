@@ -4,6 +4,8 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        {% block data %}
+        {% endblock %}
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Philosopher:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
@@ -43,4 +45,5 @@
             <p id="footer__content">Author: Destiny Perine</p>
         </footer>
     </body>
+    <script type="text/javascript" src="{{ url_for('static', filename='progress.js') }}"></script>
 </html>
