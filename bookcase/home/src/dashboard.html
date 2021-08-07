@@ -3,8 +3,8 @@
 {% block title %}Dashboard{% endblock %}
 
 {% block greeting %}
-<div id="intro-img" style="background-image: url('../static/asset/images/ella-jardim-M0zs81FNm6s-unsplash.jpg');">
-    <h1 id="h1-intro">
+<div class="intro-img" style="background-image: url('../static/asset/images/ella-jardim-M0zs81FNm6s-unsplash.jpg');">
+    <h1 class="h1-intro">
         Welcome User!
     </h1>
 </div>
@@ -12,12 +12,12 @@
 
 {% block content %}
 <main id="dashboard-main">
-    <section id="due-soon">
+    <section class="due-soon">
         <div class="dashboard-header">
             <h2 class="dashboard-header--text">Due Soon:</h2>
         </div>
-        <div id="due-soon__info">
-            <section id="due-soon__date">
+        <div class="due-soon__info">
+            <section class="due-soon__date">
                 <div class="due-soon__date__month">
                     <h3>December</h3>
                 </div>
@@ -25,7 +25,7 @@
                     <h3>01</h3>
                 </div>
             </section>
-            <section id="due-soon__books">
+            <section class="due-soon__books">
                 {% if duesoon %}
                     {% for book in duesoon %}
                     <div class="card">
@@ -41,11 +41,11 @@
             </section>
         </div>
     </section>
-    <section id="overdue">
+    <section class="overdue">
         <div class="dashboard-header">
             <h2 class="dashboard-header--text">Overdue:</h2>
         </div>
-        <section id="overdue__books">
+        <section class="overdue__books">
             {% if overdue %}
                     {% for book in overdue%}
                     <div class="card">

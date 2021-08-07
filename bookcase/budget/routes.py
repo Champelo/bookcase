@@ -1,4 +1,4 @@
-from flask import render_template, request, redirect, url_for
+from flask import render_template, redirect, url_for
 from flask_login import current_user, login_required
 from bookcase.models import Book
 from bookcase import db
@@ -10,7 +10,7 @@ from bookcase.forms.fields import BudgetForm
 @login_required
 def budget_home():
     books = db.session.query(Book).order_by(Book.purchased_date.desc())
-    return render_template('new-budget-home.html', user=current_user, books=books)
+    return render_template('budget-home.html', user=current_user, books=books)
 
 @budget_bp.route('/change-budget', methods=['GET', 'POST'])
 @login_required

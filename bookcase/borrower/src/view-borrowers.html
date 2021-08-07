@@ -3,28 +3,28 @@
 {% block title %}View Borrowers{% endblock %}
 
 {% block header %}
-<div id="intro-img" style="background-image: url('../../static/asset/images/hannah-busing-G-_L3Eqkqmc-unsplash.jpg');">
-    <h1 id="h1-intro">Borrowers</h1>
+<div class="intro-img" style="background-image: url('../../static/asset/images/hannah-busing-G-_L3Eqkqmc-unsplash.jpg');">
+    <h1 class="h1-intro">Borrowers</h1>
 </div>
 {% endblock %}
 
 {% block content %}
-<main id="main-browsing">
-    <div id="search">
-        <form id="search__form"> 
-            <input id = "search__bar" type="text" placeholder="Search..">
+<main class="main-browsing">
+    <div class="search">
+        <form class="search__form"> 
+            <input class= "search__bar" type="text" placeholder="Search..">
             <button>Search</button>
         </form>
     </div>
-    <div id="browse-books">
-        <div id="browse-books__options">
-            <a id="browse-books__options a" href="{{ url_for('borrower_bp.add_borrower') }}">+ Add Borrower</a>
+    <div class="browse-books">
+        <div class="browse-books__options">
+            <a class="browse-books__options a" href="{{ url_for('borrower_bp.add_borrower') }}">+ Add Borrower</a>
         </div>
-        <div id="browse-books__book-tiles">
+        <div class="browse-books__book-tiles">
             {% for borrower in borrowers %}
             <div class="card">
                 <div class="card__info card__info--left">
-                     <a href="{{ url_for('borrower_bp.borrower_profile', borrowerID=borrower.borrowerId) }}" class="card__info__title card__info__text">{{ borrower.fname }} {{ borrower.lname }}</a>
+                     <a class="card__info__title card__info__text" href="{{ url_for('borrower_bp.borrower_profile', borrowerID=borrower.borrowerId) }}">{{ borrower.fname }} {{ borrower.lname }}</a>
                      <p class="card__info__subtitle card__info__text">{{ borrower.rating }}</p>
                  </div>
             </div>

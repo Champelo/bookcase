@@ -1,31 +1,31 @@
 {% extends "base-redo.html" %}
 
 {% block content %}
-<main id="book-profile__main">
+<main class="book-profile__main">
     {% set book = data["volumeInfo"] %}
     <div>
         <a class="profile-links" href="{{ url_for('book_bp.bookcase') }}">Return</a>
-        <div id="book-image">
+        <div class="book-image">
             {% if "imageLinks" in book %}
                <img src="{{ book['imageLinks']['thumbnail'] }}"/>
             {% else %}
                <img src="../../static/asset/images/freesia.svg"/>
             {% endif %}
         </div>
-        <div class="profile-btn" id="profile-btn--add">
+        <div class="profile-btn profile-btn--add">
             {% set profile = "http://127.0.0.1:5000/bookcase/add-book?link=" + data["selfLink"] %}
             <a href="{{ profile }}">Add Book</a>
         </div>
     </div>
-    <div id="book-info">
+    <div class="book-info">
         <h1>{{ book["title"] }}</h1>
-        <div id="book-info__spans">
+        <div class="book-info__spans">
             <span>
                 <p>ISBN:</p>
                 <p>Authors:</p>
                 <p>Description:</p>
             </span>
-            <span id="book-info__spans--right">
+            <span class="book-info__spans--right">
                 {% for identifier in book["industryIdentifiers"] %}
                     {% if identifier["type"] == "ISBN_13" %}
                         <p>{{ identifier["identifier"] }}</p>

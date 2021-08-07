@@ -2,7 +2,7 @@
 
 
 {% block content %}
-<main id="book-profile__main">
+<main class="book-profile__main">
     <div>
         <a class="profile-links" href="{{ url_for('book_bp.bookcase') }}">Return</a>
         {% if book.overdue %}
@@ -14,9 +14,9 @@
         {% endif %}
         <img src="images/download.png">
     </div>
-    <div id="book-info">
+    <div class="book-info">
         <h1>{{ book.title }}</h1>
-        <div id="book-info__spans">
+        <div class="book-info__spans">
             <span>
                 {% if not book.status %}
                     <p>Borrower:</p>
@@ -38,15 +38,15 @@
             </span>
         </div>
         {% if book.status %}
-        <div class="profile-btn" id="profile-btn--status">
+        <div class="profile-btn profile-btn--status">
             <a href="{{ url_for('borrower_bp.view_choose_borrower', isbn=book.isbn) }}">Check Out</a>
         </div>
         {% else %}
-        <div class="profile-btn" id="profile-btn--status">
+        <div class="profile-btn profile-btn--status">
             <a href="{{ url_for('book_bp.returnBook', isbn=book.isbn) }}">Check In</a>
         </div>
         {% endif %}
-        <div class="profile-btn" id="profile-btn--delete">
+        <div class="profile-btn profile-btn--delete">
             <a href="{{ url_for('book_bp.delete_book', isbn=book.isbn) }}">Delete</a>
         </div>
     </div>
