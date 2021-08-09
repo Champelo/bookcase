@@ -12,10 +12,6 @@
     <form method="post" action="{{ url_for('auth_bp.login')}}">
         {{ form.csrf_token }}
         <div class="auth-form">
-            <div class="auth-form--labels">
-                {{ form.email.label}}
-                {{ form.password.label }}
-            </div>
             <div class="auth-form--input">
                 {{ form.email }}
                 <div>
@@ -31,7 +27,7 @@
                 </div>
             </div>
         </div>
-        <button class="form-btn--standard" type="submit" value="Submit">Login</button>
+        <button class="form-btn form-btn--orange" type="submit" value="Submit">Login</button>
     </form>
 {% endblock %}
 

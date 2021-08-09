@@ -13,11 +13,6 @@
 <form method="post" action="{{ url_for('auth_bp.sign_up')}}">
     {{ form.csrf_token }}
     <div class="auth-form">
-        <div class="auth-form--labels">
-            {{ form.email.label}}
-            {{ form.password.label }}
-            {{ form.confirm_password.label }}
-        </div>
         <div class="auth-form--input">
             {{ form.email }}
             <div>
@@ -39,7 +34,7 @@
             </div>
         </div>
     </div>
-    <button class="form-btn--standard" type="submit" value="Submit">Sign Up</button>
+    <button class="form-btn form-btn--orange" type="submit" value="Submit">Sign Up</button>
 </form>
 {% endblock %}
 
