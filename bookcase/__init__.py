@@ -5,6 +5,7 @@ import os.path
 from flask_login import LoginManager
 from config import Config
 from flask_migrate import Migrate
+from flask_assets import Environment, Bundle
 
 db = SQLAlchemy()
 
@@ -15,7 +16,16 @@ def create_app(test_config=None, config_class=Config):
     app.config['SQLALCHEMY_ECHO'] = True
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
     migrate = Migrate(app, db)
+
+    assets = Environment(app)
+    assets.url = app.static_url_path
+    scss = Bundle('asset/scss/main.scss', filters='pyscss', output='main.css')
+
+    
+    assets.register('scss', scss)
     db.app = app
+
+
     db.init_app(app)
     migrate.init_app(app, db)
     scheduler.init_app(app)

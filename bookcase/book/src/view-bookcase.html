@@ -1,16 +1,42 @@
-{% extends "base.html" %}
+{% extends "header-img.html" %}
 
 {% block title %}View Bookcase{% endblock %}
 
+{% block greeting %}
+<div class="intro-img" style="background-image: url('../../static/asset/images/thought-catalog-Zr7MxECDTQ8-unsplash.jpg');">
+    <h1 class="h1-intro">
+        User's Bookcase
+    </h1>
+</div>
+{% endblock %}
+
 {% block content %}
-<h1 align='center'>Bookcase</h1>
-<a class="nav-item nav-link" href="{{ url_for('book_bp.browse_books') }}">Add Book</a>
-<ul>
-    {% for book in book_case %}
-        <div>
-            <a href="{{ url_for('book_bp.book_profile', isbn=book.isbn) }}">{{ book.title }}</a>
-            <p>{{ book.isbn }}</p>
+<main class="main-browsing">
+    <div class="search">
+        <form class="search__form"> 
+            <input class= "search__bar" type="text" placeholder="Search..">
+            <button>Search</button>
+        </form>
+    </div>
+    <div class="browse-books">
+        <div class="browse-books__options">
+            <a class="browse-books__options a" href="{{ url_for('book_bp.browse_books') }}">+ Add Book</a>
         </div>
-    {% endfor %}
-</ul>
+        <div class="browse-books__book-tiles">
+            {% if bookcase %}
+                {% for book in bookcase %}
+                    <div class="card">
+                        <div class="card__image"><img src="../../static/asset/images/freesia.svg"/></div>
+                        <div class="card__info card__info--left">
+                            <a href="{{ url_for('book_bp.book_profile', isbn=book.isbn) }}" class="card__info__title card__info__text">{{book.title}}</a>
+                            <p class="card__info__subtitle card__info__text">By: {{ book.name }}</p>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>You haven't added any books yet! Click "Add Book" to grow your book collection!</p>
+            {% endif %}
+        </div>
+    </div>
+</main>
 {% endblock %}

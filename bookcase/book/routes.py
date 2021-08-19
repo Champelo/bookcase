@@ -1,27 +1,42 @@
 from flask import render_template, request, redirect, url_for, flash, session
 from flask_login import current_user, login_required
-from bookcase.models import Book, Author, Borrower
-from bookcase import db
 from datetime import datetime, timedelta
-from . import book_bp
-from decimal import Decimal
-from config import consumer_key
 import requests
+from bookcase import db
+from . import book_bp
+from bookcase.models import Book, Author, Borrower, booksauthors
 from bookcase.forms.fields import DueDateForm
+from config import consumer_key
+
 
 
 @book_bp.route('/')
 @login_required
 def bookcase():
-    book_case = db.session.query(Book)
-    return render_template('view-bookcase.html', user=current_user, book_case=book_case)
+    bookcase = db.session.query(Book.title, Book.isbn, Author.name).\
+    join(booksauthors, booksauthors.c.book_isbn == Book.isbn).\
+        join(Author, booksauthors.c.author_id == Author.id)
+    return render_template('view-bookcase.html', user=current_user, bookcase=bookcase)
 
 @book_bp.route('/book-profile/<string:isbn>')
 @login_required
 def book_profile(isbn):
-    book = db.session.query(Book).filter_by(isbn=isbn).first()
-    authors = book.authors
-    return render_template('book-profile.html', user=current_user, book=book, authors=authors)
+    book = db.session.query(Book.title, Book.isbn, Book.status,
+    Book.overdue, Author.name).\
+        filter_by(isbn=isbn).\
+        join(booksauthors, booksauthors.c.book_isbn == Book.isbn).\
+            join(Author, booksauthors.c.author_id == Author.id).\
+                first()
+    if not book.status:
+        book = db.session.query(Book.title, Book.isbn, Book.status,
+        Book.overdue, Book.due_date, Borrower.fname, Borrower.lname, Author.name).\
+            filter_by(isbn=isbn).\
+            join(booksauthors, booksauthors.c.book_isbn == Book.isbn).\
+                join(Author, booksauthors.c.author_id == Author.id).\
+                    join(Borrower, Book.borrower_id == Borrower.borrowerId).\
+                        first()
+    
+    return render_template('book-profile.html', user=current_user, book=book)
 
 @book_bp.route('/browse-books', methods=['GET', 'POST'])
 @login_required

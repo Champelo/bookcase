@@ -1,4 +1,4 @@
-from flask import render_template, request, redirect, url_for
+from flask import render_template, redirect, url_for
 from flask_login import current_user, login_required
 from bookcase.models import Book
 from bookcase import db
@@ -9,7 +9,8 @@ from bookcase.forms.fields import BudgetForm
 @budget_bp.route('/')
 @login_required
 def budget_home():
-    return render_template('budget-home.html', user=current_user)
+    books = db.session.query(Book).order_by(Book.purchased_date.desc())
+    return render_template('budget-home.html', user=current_user, books=books)
 
 @budget_bp.route('/change-budget', methods=['GET', 'POST'])
 @login_required
@@ -17,9 +18,9 @@ def change_budget():
     form = BudgetForm()
     if form.validate_on_submit():
         budget = form.bookprice.data
-        newbudprice = current_user.budget - current_user.bud_remaining
+        amount_spent = current_user.budget - current_user.bud_remaining
         current_user.budget = budget
-        current_user.bud_remaining = Decimal(budget) - newbudprice
+        current_user.bud_remaining = Decimal(budget) - amount_spent
         db.session.commit()
         return redirect(url_for('budget_bp.budget_home'))
 
@@ -32,12 +33,6 @@ def delete_budget():
     current_user.bud_remaining = 0.00
     db.session.commit()
     return redirect(url_for('budget_bp.budget_home'))
-
-@budget_bp.route('/spending-log')
-@login_required
-def spending_log():
-    books = db.session.query(Book)
-    return render_template('spending-log.html', user=current_user, books=books)
 
 @budget_bp.route('/decrease-remaining/<string:isbn>')
 @login_required
@@ -62,7 +57,7 @@ def update_bookprice(isbn):
             current_user.bud_remaining = current_user.bud_remaining + pricediff
         book.bookprice = new_price
         db.session.commit()
-        return redirect(url_for('budget_bp.spending_log'))
+        return redirect(url_for('budget_bp.budget_home'))
     
     return render_template('update-bookprice.html', user=current_user, book=book, form=form)
 

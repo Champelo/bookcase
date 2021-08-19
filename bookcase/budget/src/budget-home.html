@@ -1,15 +1,57 @@
-{% extends "base.html" %}
+{% extends "base-redo.html" %}
 
-{% block title %}My Budget{% endblock %}
+{% block title %}Budget{% endblock %}
+{% block data %}
+<meta id="remainder" name="remainder" content="{{ current_user.bud_remaining }}">
+<meta id="budget" name="budget" content="{{ current_user.budget }}">
+{% endblock %}
 
 {% block content %}
-    <h1>Budget</h1>
-    <h2>Budget Remaining</h2>
-    <div>$ {{ current_user.bud_remaining }}</div>
-    <a href="{{ url_for('budget_bp.spending_log') }}">View Books</a>
-    <br>
-    <br>
-    <div>Current Budget is {{ current_user.budget }}</div>
-    <a href="{{ url_for('budget_bp.change_budget') }}">Change Budget</a>
-    <a href="{{ url_for('budget_bp.delete_budget') }}">Delete Budget</a>
+<main id="budget-main">
+    <div id="remaining-budget">
+        <svg id="progress-ring">
+            <circle
+                id="progress-ring__circle"
+                stroke="#81CA7B"
+                stroke-width="25"
+                fill="transparent"
+                r="90"
+                cx="-130"
+                cy="-50"
+            />
+            <text 
+            id="budget-text" 
+            text-anchor="start" 
+            x="90" 
+            y="125" 
+            fill="#F2B5A7">Budget Remaining:</text>
+            <text 
+            id="budget-amount" 
+            text-anchor="start" 
+            x="120" 
+            y="150" 
+            fill="#F2B5A7">{{ current_user.bud_remaining }}</text>
+        </svg> 
+    </div>
+    <div class="spending-log">
+        <div><h2>Spending Log</h2></div>
+        <div class="spending-log__books">
+            {% for book in books %}
+                <div class="card">
+                    <div class="card__image"><img src="../../static/asset/images/freesia.svg"/></div>
+                    <div class="card__info">
+                        <div class="card__info--left">
+                            <a href="{{ url_for('book_bp.book_profile', isbn=book.isbn) }}" class="card__info__title card__info__text">{{ book.title }}</a>
+                            <p class="card__info__subtitle card__info__text">Purchased: {{ book.purchased_date }}</p>
+                        </div>
+                        <div class="card__info--right">
+                            <p class="card__info__price card__info__text">{{ book.bookprice }}</p>
+                            <a href="{{ url_for('budget_bp.update_bookprice', isbn=book.isbn) }}" class="card__info__text form-btn">Update</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</main>
 {% endblock %}
