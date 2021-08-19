@@ -46,21 +46,7 @@
                         </div>
                         <div class="card__info--right">
                             <p class="card__info__price card__info__text">{{ book.bookprice }}</p>
-                            <a class="card__info__text form-btn">Update</a>
-                            <div class="form-bg">
-                                <div id="form-popup" class="form-popup">  
-                                    <p class="form-popup__text form-popup__text--header">Update Book Price</p>
-                                    <form>
-                                        <div>
-                                            <input type="number" name="price" placeholder="Enter Book Price">
-                                        </div>
-                                        <div class="form-popup__btns">
-                                            <button class="form-popup__btns--orange">Save Changes</button>
-                                            <button class="form-popup__btns--red form-close">Cancel</button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
+                            <a href="{{ url_for('budget_bp.update_bookprice', isbn=book.isbn) }}" class="card__info__text form-btn">Update</a>
                         </div>
                     </div>
                 </div>

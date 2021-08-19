@@ -1,21 +1,22 @@
-{% extends "base.html" %}
+{% extends "base-redo.html" %}
 
 {% block title %}Update{% endblock %}
 
 {% block content %}
-<h1>Update</h1>
-<form method="post" action="{{ url_for('book_bp.update_duedate', isbn=book.isbn) }}">
-    <div class="form-group">
-        {{ form.csrf_token }}
-        {{ form.date.label }}
-        {{ form.date }}
+<div class="update_bookprice-bg">
+    <h1>Update Due Date for {{ book.title }}</h1>
+    <form class="edit-form" method="post" action="{{ url_for('book_bp.update_duedate', isbn=book.isbn) }}">
         <div>
-            {% for error in form.date.errors %}
-                <p>{{ error }}</p>
-            {% endfor %}
+            {{ form.csrf_token }}
+            {{ form.date }}
+            <div>
+                {% for error in form.date.errors %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+            </div>
         </div>
-    </div>
-    <button class="btn btn-primary" type="submit" value="Submit">Enter</button>
-</form>
-
+        <button class="form-btn form-btn--orange" type="submit" value="Submit">Submit Changes</button>
+        <button class="form-btn form-btn--red" type="submit" value="Submit">Cancel Changes</button>
+    </form>
+</div>
 {% endblock %}

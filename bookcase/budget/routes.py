@@ -57,7 +57,7 @@ def update_bookprice(isbn):
             current_user.bud_remaining = current_user.bud_remaining + pricediff
         book.bookprice = new_price
         db.session.commit()
-        return redirect(url_for('budget_bp.spending_log'))
+        return redirect(url_for('budget_bp.budget_home'))
     
     return render_template('update-bookprice.html', user=current_user, book=book, form=form)
 
