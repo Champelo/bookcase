@@ -1,0 +1,605 @@
+/******************** Used globally ************************************************************/
+html, body {
+  height: 100vh;
+  min-height: 100vh;
+  overflow: auto;
+}
+
+body {
+  font-family: 'Philosopher', sans-serif;
+  margin: 0;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-rows: auto 1fr auto;
+      grid-template-rows: auto 1fr auto;
+}
+
+header {
+  margin-bottom: 1em;
+}
+
+main {
+  margin-top: 0;
+  margin-left: 5px;
+  margin-right: 5px;
+  padding: 0;
+}
+
+footer {
+  background-color: #F29E38;
+  color: #ffffff;
+  height: 30px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+footer #footer__content {
+  margin: 0 0 0 5px;
+}
+
+button {
+  font-family: inherit;
+}
+
+#nav-bar {
+  background-color: #F29E38;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: row nowrap;
+          flex-flow: row nowrap;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+#nav-bar__list {
+  list-style-type: none;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin: 0 1em 0 0;
+}
+
+#nav-bar .nav-bar__link {
+  margin-right: 1em;
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: normal;
+}
+
+#nav-bar .nav-bar__link:hover {
+  background-color: #F2C288;
+  margin-top: 2em;
+}
+
+#logo {
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 24px;
+  font-weight: normal;
+  margin-right: auto;
+  margin-left: 1em;
+  letter-spacing: 0.045em;
+}
+
+/********************* Used for dashboard, bookcase, and borrower pages *************************/
+#h1-intro {
+  color: #ffffff;
+  margin: auto auto 1em 1em;
+  letter-spacing: 0.045em;
+}
+
+.card {
+  background-color: #F2AEC7;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  height: 70px;
+  margin-bottom: 5px;
+}
+
+.card__image {
+  background-color: #ececec;
+  width: 65px;
+  height: 70px;
+  -webkit-box-shadow: 0px 1.5px 1.5px rgba(0, 0, 0, 0.25);
+          box-shadow: 0px 1.5px 1.5px rgba(0, 0, 0, 0.25);
+}
+
+.card__image > img {
+  width: 100%;
+  height: 100%;
+}
+
+.card__info {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin-left: 10px;
+  background-color: #F2AEC7;
+  width: 100%;
+  -webkit-box-shadow: 0px 1.5px 1.5px rgba(0, 0, 0, 0.25);
+          box-shadow: 0px 1.5px 1.5px rgba(0, 0, 0, 0.25);
+}
+
+.card__info--left {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.card__info--right {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin-left: auto;
+  margin-right: 20px;
+}
+
+.card__info__text {
+  color: #ffffff;
+  margin-left: 20px;
+}
+
+.card__info__title {
+  font-weight: bold;
+  margin-bottom: -16px;
+  font-size: 18px;
+  text-decoration: none;
+  margin-top: 18px;
+}
+
+.card__info__subtitle {
+  font-size: 15px;
+}
+
+.card__info__price {
+  font-size: 25px;
+}
+
+/********************* Used for dashboard ******************************************************/
+#dashboard-main {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.dashboard-header {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+}
+
+.dashboard-header--text {
+  margin-top: 2em;
+  margin-left: 1em;
+  font-size: normal;
+  letter-spacing: 0.1em;
+  text-decoration: underline;
+  color: #F2B5A7;
+}
+
+#due-soon {
+  -webkit-box-flex: 1.2;
+      -ms-flex: 1.2;
+          flex: 1.2;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+#due-soon__info {
+  -webkit-box-flex: 5;
+      -ms-flex: 5;
+          flex: 5;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+#due-soon__date {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  margin-right: 0;
+}
+
+#due-soon__date .due-soon__date__month {
+  margin: auto 1em auto 1em;
+  background-color: #F2AEC7;
+  height: 30px;
+  width: 125px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  color: #ffffff;
+  font-weight: normal;
+  letter-spacing: 0.045em;
+}
+
+#due-soon__date .due-soon__date__day {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  color: #ffffff;
+  font-weight: normal;
+  letter-spacing: 0.045em;
+  background-color: #F2AEC7;
+  height: 50px;
+  width: 50px;
+  margin: 1em auto 200px 5.5em;
+}
+
+#due-soon__date .due-soon__date__day--last {
+  margin-bottom: 0;
+}
+
+#due-soon__books {
+  -webkit-box-flex: 3;
+      -ms-flex: 3;
+          flex: 3;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin-top: 45px;
+}
+
+#due-soon__books::before {
+  content: "";
+  background-color: #F2B5A7;
+  position: absolute;
+  width: 2px;
+  height: 12%;
+  -ms-flex-item-align: start;
+      align-self: flex-start;
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+}
+
+#due-soon::after {
+  content: "";
+  background-color: #F2B5A7;
+  position: absolute;
+  width: 2px;
+  margin-top: 2em;
+  height: 70%;
+  display: block;
+  -ms-flex-item-align: end;
+      align-self: flex-end;
+}
+
+#overdue {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+#overdue__books {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-flex: 5;
+      -ms-flex: 5;
+          flex: 5;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+/********************* Used for budget page ****************************************************/
+#budget-main {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+#remaining-budget {
+  display: block;
+  margin: auto;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  place-items: center;
+}
+
+#spending-log {
+  -webkit-box-flex: 1.2;
+      -ms-flex: 1.2;
+          flex: 1.2;
+  margin-left: 10em;
+  margin-right: 10em;
+  overflow-y: auto;
+}
+
+#spending-log h2 {
+  color: #F2B5A7;
+  font-size: 32px;
+  letter-spacing: 0.045em;
+}
+
+#spending-log__books {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+#progress-ring {
+  width: 100%;
+  height: 100%;
+}
+
+#progress-ring__circle {
+  -webkit-transition: stroke-dashoffset 0.35s;
+  transition: stroke-dashoffset 0.35s;
+  -webkit-transform: rotate(-90deg);
+          transform: rotate(-90deg);
+  -webkit-transform-origin: 100px -100px;
+          transform-origin: 100px -100px;
+  -webkit-box-shadow: inset 0px 1px 1px rgba(0, 0, 0, 0.25);
+          box-shadow: inset 0px 1px 1px rgba(0, 0, 0, 0.25);
+  -webkit-filter: drop-shadow(0px 1px 1px rgba(0, 0, 0, 0.25));
+          filter: drop-shadow(0px 1px 1px rgba(0, 0, 0, 0.25));
+}
+
+#budget-text {
+  font-size: 15px;
+}
+
+#budget-amount {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+/********************* Used for bookcase, add book, and borrower pages **************************/
+#main-browsing {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+#search {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+#search__form {
+  margin-top: 40px;
+  padding-right: 4em;
+}
+
+#search__bar {
+  background-color: #F2B5A7;
+  border: none;
+  width: 35em;
+  height: 40px;
+  border-radius: 90px;
+  margin-bottom: 10px;
+}
+
+#search__bar::-webkit-input-placeholder {
+  color: #ffffff;
+  font-family: 'Philosopher', sans-serif;
+  font-style: normal;
+  font-size: 20px;
+}
+
+#search__bar:-ms-input-placeholder {
+  color: #ffffff;
+  font-family: 'Philosopher', sans-serif;
+  font-style: normal;
+  font-size: 20px;
+}
+
+#search__bar::-ms-input-placeholder {
+  color: #ffffff;
+  font-family: 'Philosopher', sans-serif;
+  font-style: normal;
+  font-size: 20px;
+}
+
+#search__bar::placeholder {
+  color: #ffffff;
+  font-family: 'Philosopher', sans-serif;
+  font-style: normal;
+  font-size: 20px;
+}
+
+#search__bar:focus {
+  background-color: white;
+  outline: none;
+  border: 1px solid #F2B5A7;
+}
+
+#search button {
+  height: 42px;
+  width: 80px;
+  background-color: #F29E38;
+  border: none;
+  color: #ffffff;
+  border-radius: 90px;
+  margin-left: -6em;
+}
+
+#search button:hover {
+  background-color: #F2C288;
+}
+
+#browse-books {
+  -webkit-box-flex: 5;
+      -ms-flex: 5;
+          flex: 5;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  margin: auto 70px auto 70px;
+}
+
+#browse-books__options {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: flex-end;
+}
+
+#browse-books__options a {
+  text-decoration: none;
+  color: #F2B5A7;
+  font-size: 18px;
+}
+
+#browse-books__book-tiles {
+  -webkit-box-flex: 9;
+      -ms-flex: 9;
+          flex: 9;
+}
+
+/********************* Currently used on dashboard and bookcase pages ***************************/
+#intro-img {
+  background-position: center;
+  min-height: 5em;
+  background-size: cover;
+  background-repeat: no-repeat;
+  margin-bottom: -1em;
+  display: -ms-grid;
+  display: grid;
+}
+
+/********************* Currently used on book profile page *************************************/
+#book-profile__main {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin: 30px 50px auto 50px;
+}
+
+.profile-links {
+  color: #F2B5A7;
+  text-decoration: none;
+}
+
+.profile-btn {
+  height: 40px;
+  width: 200px;
+  margin: 10px;
+  border-radius: 22px;
+  text-align: center;
+}
+
+.profile-btn a {
+  border-radius: 22px 22px 0 0;
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 24px;
+  line-height: 40px;
+}
+
+#profile-btn--status {
+  background-color: #F29E38;
+}
+
+#profile-btn--delete {
+  background-color: #FF5555;
+}
+
+#book-info {
+  margin-left: 50px;
+  margin-top: 30px;
+}
+
+#book-info__spans {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+#book-info > h1 {
+  color: #F2B5A7;
+  font-size: 40px;
+  font-weight: bold;
+}
+/*# sourceMappingURL=main.css.map */

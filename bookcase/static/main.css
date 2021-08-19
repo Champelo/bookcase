@@ -1,0 +1,446 @@
+; html, body {
+  overflow: auto; }
+
+  body {
+    font-family: 'Philosopher', sans-serif;
+    margin: 0;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    min-height: 100vh; }
+
+    main {
+      margin-top: 0;
+      padding: 0; }
+
+      footer {
+        background-color: #F29E38;
+        color: #ffffff;
+        height: 30px;
+        display: flex;
+        align-items: center; }
+        footer #footer__content {
+          margin: 0 0 0 5px; }
+
+button {
+  font-family: inherit; }
+
+  h1 {
+    font-family: 'Yeseva One', cursive; }
+
+    #nav-bar {
+      background-color: #F29E38;
+      display: flex;
+      flex-flow: row nowrap;
+      align-items: center;
+      height: 30px; }
+      #nav-bar__list {
+        list-style-type: none;
+        display: flex;
+        margin: 0 1em 0 0; }
+        #nav-bar .nav-bar__link {
+          margin-right: 1em;
+          color: #ffffff;
+          text-decoration: none;
+          font-size: 16px;
+          font-weight: normal; }
+          #nav-bar .nav-bar__link:hover {
+            background-color: #F2C288;
+            margin-top: 2em; }
+
+#logo {
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 24px;
+  font-weight: normal;
+  margin-right: auto;
+  margin-left: 1em;
+  letter-spacing: 0.045em; }
+
+  .auth-main {
+    display: flex; }
+    .auth-main--left {
+      flex: 2;
+      background-repeat: no-repeat;
+      background-size: cover;
+      height: 100%; }
+      .auth-main--left--login {
+        background-position: center; }
+    .auth-main--right {
+      flex: 1;
+      background-color: #F2AEC7;
+      display: flex;
+      flex-direction: column;
+      align-items: center; }
+      .auth-main--right h1 {
+        font-size: 3em;
+        margin-top: 70px;
+        margin-bottom: 60px;
+        text-align: center;
+        color: #ffffff; }
+        .auth-main--right form {
+          display: flex;
+          flex-direction: column;
+          align-items: center; }
+
+.auth-form {
+  display: flex;
+  margin-bottom: 20px; }
+  .auth-form--labels {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    right: 10px; }
+    .auth-form--labels label {
+      color: #ffffff;
+      font-size: 18px;
+      margin-bottom: 15px;
+      text-align: right; }
+  .auth-form--input {
+    display: flex;
+    flex-direction: column; }
+    .auth-form--input input {
+      display: flex;
+      flex-direction: column;
+      width: 15em;
+      height: 20px;
+      border: none;
+      margin-bottom: 10px; }
+
+.auth__link {
+  color: #ffffff; }
+
+  .h1-intro {
+    color: #ffffff;
+    margin: auto auto 1em 1em;
+    letter-spacing: 0.045em; }
+
+    .card {
+      background-color: #F2AEC7;
+      display: flex;
+      width: 100%;
+      height: 70px;
+      margin-bottom: 5px; }
+      .card__image {
+        background-color: #ececec;
+        width: 60px;
+        height: 70px;
+        box-shadow: 0px 1.5px 1.5px rgba(0, 0, 0, 0.25); }
+        .card__image > img {
+          width: 100%;
+          height: 100%; }
+      .card__info {
+        display: flex;
+        margin-left: 10px;
+        background-color: #F2AEC7;
+        width: 100%;
+        box-shadow: 0px 1.5px 1.5px rgba(0, 0, 0, 0.25); }
+        .card__info--left {
+          display: flex;
+          flex-direction: column;
+          justify-content: center; }
+          .card__info--right {
+            display: flex;
+            align-items: center;
+            margin-left: auto;
+            margin-right: 20px; }
+            .card__info__text {
+              color: #ffffff;
+              margin-left: 20px; }
+              .card__info__title {
+                font-weight: bold;
+                margin-bottom: -16px;
+                font-size: 18px;
+                text-decoration: none;
+                margin-top: 18px; }
+                .card__info__subtitle {
+                  font-size: 15px; }
+                  .card__info__author {
+                    display: flex; }
+                    .card__info__price {
+                      font-size: 25px; }
+
+#dashboard-main {
+  display: flex; }
+
+  .dashboard-header {
+    flex: 1; }
+    .dashboard-header--text {
+      margin-top: 2em;
+      margin-left: 1em;
+      font-size: normal;
+      letter-spacing: 0.1em;
+      text-decoration: underline;
+      color: #F2B5A7; }
+
+.due-soon {
+  flex: 1.2;
+  display: flex;
+  flex-direction: column; }
+  .due-soon__info {
+    flex: 5;
+    display: flex; }
+    .due-soon__date {
+      flex: 1;
+      margin-right: 0; }
+      .due-soon__date .due-soon__date__month {
+        margin: auto 1em auto 1em;
+        background-color: #F2AEC7;
+        height: 30px;
+        width: 125px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #ffffff;
+        font-weight: normal;
+        letter-spacing: 0.045em; }
+        .due-soon__date .due-soon__date__day {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          color: #ffffff;
+          font-weight: normal;
+          letter-spacing: 0.045em;
+          background-color: #F2AEC7;
+          height: 50px;
+          width: 50px;
+          margin: 1em auto 200px 5.5em; }
+          .due-soon__date .due-soon__date__day--last {
+            margin-bottom: 0; }
+  .due-soon__books {
+    flex: 3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 45px; }
+    .due-soon__books::before {
+      content: "";
+      background-color: #F2B5A7;
+      position: absolute;
+      width: 2px;
+      height: 12%;
+      align-self: flex-start;
+      flex-grow: 1; }
+  .due-soon::after {
+    content: "";
+    background-color: #F2B5A7;
+    position: absolute;
+    width: 2px;
+    margin-top: 2em;
+    height: 70%;
+    display: block;
+    align-self: flex-end; }
+
+.overdue {
+  flex: 1;
+  display: flex;
+  flex-direction: column; }
+  .overdue__books {
+    display: flex;
+    flex-direction: column;
+    flex: 5;
+    align-items: center; }
+
+#budget-main {
+  display: flex;
+  flex-direction: column; }
+
+  #remaining-budget {
+    display: block;
+    margin: auto;
+    flex: 1;
+    place-items: center; }
+
+    .spending-log {
+      flex: 1.2;
+      margin-left: 10em;
+      margin-right: 10em;
+      overflow-y: auto; }
+      .spending-log h2 {
+        color: #F2B5A7;
+        font-size: 32px;
+        letter-spacing: 0.045em; }
+        .spending-log__books {
+          display: flex;
+          flex-direction: column;
+          align-items: center; }
+
+#progress-ring {
+  width: 100%;
+  height: 100%; }
+  #progress-ring__circle {
+    transition: stroke-dashoffset 0.35s;
+    transform: rotate(-90deg);
+    transform-origin: 100px -100px;
+    box-shadow: inset 0px 1px 1px rgba(0, 0, 0, 0.25);
+    filter: drop-shadow(0px 1px 1px rgba(0, 0, 0, 0.25)); }
+
+#budget-text {
+  font-size: 15px; }
+
+  #budget-amount {
+    font-size: 24px;
+    font-weight: bold; }
+
+    .main-browsing {
+      display: flex;
+      flex-direction: column; }
+
+      .search {
+        flex: 1;
+        display: flex;
+        justify-content: center; }
+        .search__form {
+          margin-top: 40px;
+          padding-right: 4em; }
+          .search__bar {
+            background-color: #F2B5A7;
+            border: none;
+            width: 35em;
+            height: 40px;
+            border-radius: 90px;
+            margin-bottom: 10px; }
+            .search__bar::placeholder {
+              color: #ffffff;
+              font-family: 'Philosopher', sans-serif;
+              font-style: normal;
+              font-size: 20px; }
+              .search__bar:focus {
+                background-color: white;
+                outline: none;
+                border: 1px solid #F2B5A7; }
+        .search button {
+          height: 42px;
+          width: 80px;
+          background-color: #F29E38;
+          border: none;
+          color: #ffffff;
+          border-radius: 90px;
+          margin-left: -6em; }
+          .search button:hover {
+            background-color: #F2C288; }
+
+.browse-books {
+  flex: 4;
+  display: flex;
+  flex-direction: column;
+  margin: auto 70px auto 70px; }
+  .browse-books__options {
+    flex: 1;
+    display: flex;
+    align-items: flex-end; }
+    .browse-books__options a {
+      text-decoration: none;
+      color: #F2B5A7;
+      font-size: 18px; }
+  .browse-books__book-tiles {
+    flex: 9; }
+
+.pages {
+  display: flex;
+  flex: 1;
+  justify-content: center; }
+  .pages a {
+    color: #F2C288;
+    font-size: 20px;
+    margin-right: 5px; }
+
+.intro-img {
+  background-position: center;
+  min-height: 5em;
+  background-size: cover;
+  background-repeat: no-repeat;
+  margin-bottom: -1em;
+  display: grid; }
+
+  .book-profile__main {
+    display: flex;
+    margin: 30px 50px auto 50px; }
+
+    .profile-links {
+      color: #F2B5A7;
+      text-decoration: none; }
+
+      .profile-btn {
+        height: 40px;
+        width: 200px;
+        margin: 10px;
+        border-radius: 22px;
+        text-align: center; }
+        .profile-btn a {
+          border-radius: 22px 22px 0 0;
+          color: #ffffff;
+          text-decoration: none;
+          font-size: 24px;
+          line-height: 40px; }
+
+.profile-btn--status {
+  background-color: #F29E38; }
+
+  .profile-btn--delete {
+    background-color: #FF5555; }
+
+    .profile-btn--add {
+      margin-left: 0;
+      background-color: #F29E38; }
+
+      .book-info {
+        margin-left: 50px;
+        margin-top: 30px; }
+        .book-info__spans {
+          display: flex; }
+          .book-info__spans--right {
+            margin-left: 1em; }
+        .book-info > h1 {
+          color: #F2B5A7;
+          font-size: 40px;
+          font-weight: bold; }
+
+.book-image {
+  height: 12.8125em;
+  width: 8em;
+  margin-top: 50px;
+  margin-left: 2.5em; }
+
+  .edit-form {
+    display flex; }
+    .edit-form input {
+      display: flex;
+      flex-direction: column;
+      width: 20em;
+      height: 25px;
+      border: none;
+      margin-bottom: 10px;
+      margin-left: 6em; }
+
+.form-btn {
+  height: 40px;
+  width: 200px;
+  margin: 10px;
+  border-radius: 22px;
+  border-style: none;
+  padding: 0;
+  font-family: inherit;
+  font-size: 20px;
+  text-align: center;
+  color: #ffffff;
+  text-decoration: none; }
+  .form-btn--orange {
+    background-color: #F29E38; }
+    .form-btn--red {
+      background-color: #FF5555; }
+
+.update_bookprice-bg {
+  background-color: #F2AEC7;
+  height: 20em;
+  width: 30em;
+  position: relative;
+  left: 35%;
+  top: 15%;
+  padding: 0px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); }
+  .update_bookprice-bg h1 {
+    color: #ffffff;
+    margin-bottom: 50px; }
