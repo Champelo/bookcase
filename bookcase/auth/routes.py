@@ -1,4 +1,4 @@
-from flask import render_template, request, redirect, flash, url_for
+from flask import render_template, redirect, flash, url_for
 from flask_login import login_user, logout_user, login_required, current_user
 from . import auth_bp
 from bookcase.forms.fields import LoginForm, SignupForm

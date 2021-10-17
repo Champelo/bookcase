@@ -6,8 +6,10 @@ from flask_login import LoginManager
 from config import Config
 from flask_migrate import Migrate
 from flask_assets import Environment, Bundle
+from flask_marshmallow import Marshmallow
 
 db = SQLAlchemy()
+ma = Marshmallow()
 
 def create_app(test_config=None, config_class=Config):
     app = Flask(__name__, instance_relative_config=True)
@@ -15,6 +17,7 @@ def create_app(test_config=None, config_class=Config):
     app.config['TESTING'] = True
     app.config['SQLALCHEMY_ECHO'] = True
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
+
     migrate = Migrate(app, db)
 
     assets = Environment(app)
