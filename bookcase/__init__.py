@@ -75,5 +75,5 @@ def create_app(test_config=None, config_class=Config):
     return app
 
 
-
+create_app()
 from bookcase.task import scheduler
