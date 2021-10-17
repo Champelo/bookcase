@@ -3,7 +3,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 import os.path
 from flask_login import LoginManager
-from config import Config
+from bookcase.config import Config
 from flask_migrate import Migrate
 from flask_assets import Environment, Bundle
 from flask_marshmallow import Marshmallow
