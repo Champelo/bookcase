@@ -1,1 +1,1 @@
-web gunicorn bookcase/__init__:bookcaseweb
+web: gunicorn bookcase/__init__:bookcaseweb
