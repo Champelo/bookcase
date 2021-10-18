@@ -41,15 +41,15 @@ def create_app(test_config=None):
     login_manager.login_view = 'auth_bp.login'
     login_manager.login_message = 'Please login'
 
-    if test_config is None:
-        app.config.from_pyfile('config.py', silent=True)
-    else:
-        app.config.from_mapping(test_config)
+    # if test_config is None:
+    #     app.config.from_pyfile('config.py', silent=True)
+    # else:
+    #     app.config.from_mapping(test_config)
     
-    try:
-        os.mkdir(app.instance_path)
-    except OSError:
-        pass
+    # try:
+    #     os.mkdir(app.instance_path)
+    # except OSError:
+    #     pass
     
 
     from .models import User
