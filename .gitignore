@@ -144,5 +144,4 @@ tests/
 config.js
 jquery-3.6.0.min.js
 config.py
-task.py
 bookcase/static
