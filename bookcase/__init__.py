@@ -2,7 +2,6 @@ from os import path
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 import os.path
-from config import Config
 from flask_login import LoginManager
 #from config import Config
 from flask_migrate import Migrate
