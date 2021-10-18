@@ -3,7 +3,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 import os.path
 from flask_login import LoginManager
-from bookcase.config import Config
+# from bookcase.config import Config
 from flask_migrate import Migrate
 from flask_assets import Environment, Bundle
 from flask_marshmallow import Marshmallow
@@ -11,12 +11,13 @@ from flask_marshmallow import Marshmallow
 db = SQLAlchemy()
 ma = Marshmallow()
 
-def create_app(test_config=None, config_class=Config):
+def create_app(test_config=None):
     app = Flask(__name__, instance_relative_config=True)
-    app.config.from_object(Config)
-    app.config['TESTING'] = True
-    app.config['SQLALCHEMY_ECHO'] = True
-    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
+    #Commenting out for Heroku
+    # app.config.from_object(Config)
+    # app.config['TESTING'] = True
+    # app.config['SQLALCHEMY_ECHO'] = True
+    # app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 
     migrate = Migrate(app, db)
 
