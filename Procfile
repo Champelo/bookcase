@@ -1,1 +1,1 @@
-web: gunicorn bookcase:app --preload -b 0.0.0.0:5000
+worker: gunicorn bookcase:app --preload -b 0.0.0.0:5000
