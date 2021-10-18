@@ -2,17 +2,18 @@ from os import path
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 import os.path
+from config import Config
 from flask_login import LoginManager
-# from bookcase.config import Config
+#from config import Config
 from flask_migrate import Migrate
 from flask_assets import Environment, Bundle
 from flask_marshmallow import Marshmallow
 
 db = SQLAlchemy()
 ma = Marshmallow()
+app = Flask(__name__, instance_relative_config=True)
 
 def create_app(test_config=None):
-    app = Flask(__name__, instance_relative_config=True)
     #Commenting out for Heroku
     # app.config.from_object(Config)
     # app.config['TESTING'] = True
