@@ -6,8 +6,8 @@ from bookcase import models, db
 
 
 class LoginForm(FlaskForm):
-    email = StringField('Email', validators=[DataRequired(), Email()])
-    password = PasswordField('Password', validators=[DataRequired()])
+    email = StringField('Email', validators=[DataRequired(), Email()], render_kw={"placeholder": "Enter Email"})
+    password = PasswordField('Password', validators=[DataRequired()], render_kw={"placeholder": "Enter Password"})
 
     def validate_email(self, email):
         user = db.session.query(models.User.email).filter_by(email=email.data).first()
@@ -22,11 +22,11 @@ class LoginForm(FlaskForm):
             raise ValidationError('Incorrect password. Please try again.')
 
 class SignupForm(FlaskForm):
-    email = StringField('Email', validators=[DataRequired(), Email()])
+    email = StringField('Email', validators=[DataRequired(), Email()], render_kw={"placeholder": "Enter Email"})
     password = PasswordField('Password', 
-        validators=[DataRequired(), Length(min=5, max=20, message='Please enter a password that is greater than 5')])
+        validators=[DataRequired(), Length(min=5, max=20, message='Please enter a password that has more than 5 characters')], render_kw={"placeholder": "Enter Password"})
     confirm_password = PasswordField('Confirm password', 
-        validators=[DataRequired(), EqualTo('password', message='Passwords do not match.')])
+        validators=[DataRequired(), EqualTo('password', message='Passwords do not match.')], render_kw={"placeholder": "Confirm Password"})
 
     def validate_email(self, email):
         user = db.session.query(models.User.email).filter_by(email=email.data).first()

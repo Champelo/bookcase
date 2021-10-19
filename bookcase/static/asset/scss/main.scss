@@ -578,7 +578,7 @@ h1{
 }
 /********************* Used on forms **************************************/
 .edit-form{
-    display flex;
+    display: flex;
 
     & input{
         display: flex;

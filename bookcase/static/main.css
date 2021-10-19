@@ -402,7 +402,7 @@ button {
   margin-left: 2.5em; }
 
   .edit-form {
-    display flex; }
+    display: flex; }
     .edit-form input {
       display: flex;
       flex-direction: column;

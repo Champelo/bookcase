@@ -11,7 +11,7 @@ from config import consumer_key
 
 
 @book_bp.route('/')
-# @login_required
+@login_required
 def bookcase():
     # bookcase = db.session.query(Book.title, Book.isbn, Author.name).all()
     # book_schema = BookSchema(many=True)
@@ -20,8 +20,7 @@ def bookcase():
         join(Author, booksauthors.c.author_id == Author.id)
 
     book_schema = BookSchema(many=True)
-    # return render_template('view-bookcase.html', user=current_user, bookcase=bookcase)
-    return jsonify(book_schema.dump(bookcase))
+    return render_template('view-bookcase.html', user=current_user, bookcase=bookcase)
 
 @book_bp.route('/book-profile/<string:isbn>')
 @login_required
