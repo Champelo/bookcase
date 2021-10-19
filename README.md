@@ -8,12 +8,14 @@ By: Champelo
 <li>Flask-Sqlalchemy</li>
 <li>HTML</li>
 <li>CSS</li>
-<li>Javascript</li> 
+<li>Javascript</li>
+<li>Google Books API</li>
 </ul><br>
 
 Description:  
 A personal library management system that rates borrowers on how often they return a book on time. 
-Created to learn more about APIs and frontend development.   
+Created to learn more about APIs and frontend development.
+<b>This project is still in progress</b><br>
 <b>Current Features:</b> 
   <ul>
     <li>CRUD operations for books in users' libraries and borrowers.</li>
@@ -24,7 +26,6 @@ Created to learn more about APIs and frontend development.
     <li>App adjusts borrowers' ratings when the books are checked in</li>   
     <li>Keeps track of the user's book budget</li>     
   </ul><br>  
-
 
 <b>Known Bugs:</b>
 <ul>
