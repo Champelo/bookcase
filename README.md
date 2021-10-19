@@ -34,8 +34,7 @@ Created to learn more about APIs and frontend development.
 <li>Book profile page sometime gets an attribute error</li>
 <li>The app will sometimes receive a timeout error</li>
 <li>Search bars on borrower and user bookcase screens aren't functional</li>
- <li>Due soon section on the dashboard doesn't show the correct date</li>
-  <li>Search isn't implemented for borrowers and user's saved books</li>
+  <li>Sometimes tiles on add book page stretch across page or are blank</li>
 </ul>
 
   
