@@ -3,21 +3,21 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 import os.path
 from flask_login import LoginManager
-#from config import Config
+from config import Config
 from flask_migrate import Migrate
 from flask_assets import Environment, Bundle
 from flask_marshmallow import Marshmallow
 
 db = SQLAlchemy()
 ma = Marshmallow()
-app = Flask(__name__, instance_relative_config=True)
 
-def create_app(test_config=None):
-    #Commenting out for Heroku
-    # app.config.from_object(Config)
-    # app.config['TESTING'] = True
-    # app.config['SQLALCHEMY_ECHO'] = True
-    # app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
+
+def create_app(test_config=None, config_class=Config):
+    app = Flask(__name__, instance_relative_config=True)
+    app.config.from_object(Config)
+    app.config['TESTING'] = True
+    app.config['SQLALCHEMY_ECHO'] = True
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 
     migrate = Migrate(app, db)
 
@@ -40,15 +40,15 @@ def create_app(test_config=None):
     login_manager.login_view = 'auth_bp.login'
     login_manager.login_message = 'Please login'
 
-    # if test_config is None:
-    #     app.config.from_pyfile('config.py', silent=True)
-    # else:
-    #     app.config.from_mapping(test_config)
+    if test_config is None:
+        app.config.from_pyfile('config.py', silent=True)
+    else:
+        app.config.from_mapping(test_config)
     
-    # try:
-    #     os.mkdir(app.instance_path)
-    # except OSError:
-    #     pass
+    try:
+        os.mkdir(app.instance_path)
+    except OSError:
+        pass
     
 
     from .models import User
