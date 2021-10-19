@@ -51,6 +51,8 @@ def browse_books():
         q = session['gbook_q']
         next_page = True
     if request.method == 'POST' or next_page:
+        if request.method == 'POST' and q:
+            session.pop('gbook_q')
         if 'gbook_q' not in session:
             q = request.form['q']
             session['gbook_q'] = q
@@ -74,35 +76,35 @@ def gbook_profile():
     data = response.json()
     return render_template('gbook-profile.html', user=current_user, data=data)
 
-@book_bp.route('/add-book', methods=['GET', 'POST'])
-@login_required
-def add_book():
-    link = request.args.get('link')
-    response = requests.get(link)
-    if response.status_code != 200:
-        print('Error')
-    data = response.json()
-    book = data['volumeInfo']
-    title = book['title']
-    for isbn in book['industryIdentifiers']:
-        if isbn['type'] == 'ISBN_13':
-            isbn = isbn['identifier']
-    authors = book['authors']
-    price = None
-    new_book = Book(title=title, isbn=isbn, bookprice=price)
-    db.session.add(new_book)
-    db.session.commit()
-    for author in authors:
-        new_author = Author(name=author)
-        author_exist = db.session.query(Author).filter_by(name=author).first()
-        db.session.commit()
-        if not author_exist:
-            db.session.add(new_author)
-            new_book.authors.append(new_author)
-        else:
-            new_book.authors.append(author_exist)
-    db.session.commit()
-    return redirect('http://127.0.0.1:5000/bookcase/gbook-profile?link=' +  data['selfLink'])
+# @book_bp.route('/add-book', methods=['GET', 'POST'])
+# @login_required
+# def add_book():
+#     link = request.args.get('link')
+#     response = requests.get(link)
+#     if response.status_code != 200:
+#         print('Error')
+#     data = response.json()
+#     book = data['volumeInfo']
+#     title = book['title']
+#     for isbn in book['industryIdentifiers']:
+#         if isbn['type'] == 'ISBN_13':
+#             isbn = isbn['identifier']
+#     authors = book['authors']
+#     price = None
+#     new_book = Book(title=title, isbn=isbn, bookprice=price)
+#     db.session.add(new_book)
+#     db.session.commit()
+#     for author in authors:
+#         new_author = Author(name=author)
+#         author_exist = db.session.query(Author).filter_by(name=author).first()
+#         db.session.commit()
+#         if not author_exist:
+#             db.session.add(new_author)
+#             new_book.authors.append(new_author)
+#         else:
+#             new_book.authors.append(author_exist)
+#     db.session.commit()
+#     return redirect('http://127.0.0.1:5000/bookcase/gbook-profile?link=' +  data['selfLink'])
     
 @book_bp.route('/update-duedate/<string:isbn>', methods=['GET', 'POST'])
 @login_required
