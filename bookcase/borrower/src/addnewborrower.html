@@ -3,26 +3,30 @@
 {% block title %}Add Borrower{% endblock %}
 
 {% block content %}
-    <div class="update_bookprice-bg">
+    <div class="smallforms">
         <h1>Add Borrower</h1>
         <form class="edit-form" method="post" action="{{ url_for('borrower_bp.add_borrower') }}">
             {{ form.csrf_token }}
             <div>
-                {{ form.fname }}
                 <div>
-                    {% for error in form.fname.errors %}
-                        <p>{{ error }}</p>
-                    {% endfor %}
+                    {{ form.fname }}
+                    <div>
+                        {% for error in form.fname.errors %}
+                            <p>{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                    {{ form.lname }}
+                    <div>
+                        {% for error in form.lname.errors %}
+                            <p>{{ error }}</p>
+                        {% endfor %}
+                    </div>
                 </div>
-                {{ form.lname }}
                 <div>
-                    {% for error in form.lname.errors %}
-                        <p>{{ error }}</p>
-                    {% endfor %}
+                    <button class="form-btn form-btn--orange" type="submit" value="Submit">Submit Changes</button>
+                    <button class="form-btn form-btn--red" type="submit" value="Submit">Cancel Changes</button>
                 </div>
             </div>
-            <button class="form-btn form-btn--orange" type="submit" value="Submit">Submit Changes</button>
-            <button class="form-btn form-btn--red" type="submit" value="Submit">Cancel Changes</button>
         </form>
     </div>
 {% endblock %}

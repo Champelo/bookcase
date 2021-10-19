@@ -3,9 +3,10 @@
 {% block title %}Update Price{% endblock %}
 
 {% block content %}
-    <div class="update_bookprice-bg">
+    <div class="smallforms">
         <h1>Update {{ book.title }}'s Price</h1>
         <form class="edit-form" method="post" action="{{ url_for('budget_bp.update_bookprice', isbn=book.isbn) }}">
+            <div>
             <div>
                 {{ form.csrf_token }}
                 {{ form.bookprice }}
@@ -19,6 +20,7 @@
                 <button class="form-btn form-btn--orange" type="submit" value="Submit">Submit Changes</button>
                 <button class="form-btn form-btn--red" type="submit" value="Submit">Cancel Changes</button>
             </div>
+        </div>
         </form>
     </div>
 {% endblock %}

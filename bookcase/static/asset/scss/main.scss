@@ -579,6 +579,7 @@ h1{
 /********************* Used on forms **************************************/
 .edit-form{
     display: flex;
+    flex-direction: row;
 
     & input{
         display: flex;
@@ -614,7 +615,7 @@ h1{
     }
 }
 
-.update_bookprice-bg{
+.smallforms{
     background-color: color(primary-pink);
     height: 20em;
     width: 30em;
