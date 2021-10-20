@@ -15,7 +15,7 @@ from config import consumer_key
 def bookcase():
     # bookcase = db.session.query(Book.title, Book.isbn, Author.name).all()
     # book_schema = BookSchema(many=True)
-    bookcase = db.session.query(Book.title, Book.isbn, Author.name).\
+    bookcase = db.session.query(Book.title, Book.isbn, Book.thumbnail, Author.name).\
     join(booksauthors, booksauthors.c.book_isbn == Book.isbn).\
         join(Author, booksauthors.c.author_id == Author.id)
 
@@ -26,14 +26,15 @@ def bookcase():
 @login_required
 def book_profile(isbn):
     book = db.session.query(Book.title, Book.isbn, Book.status,
-    Book.overdue, Author.name).\
+    Book.overdue, Book.thumbnail, Author.name).\
         filter_by(isbn=isbn).\
         join(booksauthors, booksauthors.c.book_isbn == Book.isbn).\
             join(Author, booksauthors.c.author_id == Author.id).\
                 first()
+    #Query to run if the book is checkout since it will have a borrower.
     if not book.status:
         book = db.session.query(Book.title, Book.isbn, Book.status,
-        Book.overdue, Book.due_date, Borrower.fname, Borrower.lname, Author.name).\
+        Book.overdue, Book.due_date, Book.thumbnail, Borrower.fname, Borrower.lname, Author.name).\
             filter_by(isbn=isbn).\
             join(booksauthors, booksauthors.c.book_isbn == Book.isbn).\
                 join(Author, booksauthors.c.author_id == Author.id).\
@@ -51,11 +52,11 @@ def browse_books():
         q = session['gbook_q']
         next_page = True
     if request.method == 'POST' or next_page:
-        if request.method == 'POST' and q:
-            session.pop('gbook_q')
         if 'gbook_q' not in session:
             q = request.form['q']
             session['gbook_q'] = q
+        elif request.method == 'POST' and q:
+            session.pop('gbook_q')
         page = request.args.get('page', 1, type=int)
         response = requests.get('https://www.googleapis.com/books/v1/volumes?q=' + q + 
         '&orderBy=relevance&startIndex=' + str(page) + '&key=' + consumer_key)
@@ -90,8 +91,12 @@ def add_book():
         if isbn['type'] == 'ISBN_13':
             isbn = isbn['identifier']
     authors = book['authors']
+    if "imageLinks" in book:
+        thumbnail = book['imageLinks']['thumbnail']
+    else:
+        thumbnail = None
     price = None
-    new_book = Book(title=title, isbn=isbn, bookprice=price)
+    new_book = Book(title=title, isbn=isbn, bookprice=price, thumbnail=thumbnail)
     db.session.add(new_book)
     db.session.commit()
     for author in authors:

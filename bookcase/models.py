@@ -10,7 +10,7 @@ booksauthors = db.Table('booksauthors',
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(), unique=True, nullable=False)
-    password = db.Column(db.String(), unique=True, nullable=False)
+    password = db.Column(db.String(), nullable=False)
     budget = db.Column(db.Numeric(6, 2), default=0.00)
     bud_remaining = db.Column(db.Numeric(6, 2), default=0.00)
 

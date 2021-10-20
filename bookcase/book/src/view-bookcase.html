@@ -26,7 +26,7 @@
             {% if bookcase %}
                 {% for book in bookcase %}
                     <div class="card">
-                        <div class="card__image"><img src="../../static/asset/images/freesia.svg"/></div>
+                        <div class="card__image"><img src="{{ book.thumbnail }}"/></div>
                         <div class="card__info card__info--left">
                             <a href="{{ url_for('book_bp.book_profile', isbn=book.isbn) }}" class="card__info__title card__info__text">{{book.title}}</a>
                             <p class="card__info__subtitle card__info__text">By: {{ book.name }}</p>
