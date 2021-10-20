@@ -1,13 +1,21 @@
-{% extends "base.html" %}
+{% extends 'base-redo.html' %}
 
-{% block title %}Update{% endblock %}
 {% block content %}
-    <div align="center">
+<main class="book-profile__main">
+    <div>
+        <a class="profile-links" href="{{ url_for('borrower_bp.view_borrowers') }}">Return</a>
+        
+    </div>
+    <div class="book-info">
+        <div></div>
         <h1>{{ borrower.fname }} {{ borrower.lname }}</h1>
-        <p>Rating: {{ borrower.rating }}</p>   
+        <p>Rating: {{ borrower.rating }}</p>
+        <div class="profile-btn profile-btn--status">
+            <a href="{{url_for('borrower_bp.update_borrower', borrowerID=borrower.borrowerId) }}">Update</button>
+        </div>
+        <div class="profile-btn profile-btn--delete">
+            <a href="{{ url_for('borrower_bp.delete_borrower', borrowerID=borrower.borrowerId) }}">Delete</a>
+        </div>
     </div>
-    <div align="center">
-        <a href="{{url_for('borrower_bp.update_borrower', borrowerID=borrower.borrowerId) }}">Update</button>
-        <a href="{{ url_for('borrower_bp.delete_borrower', borrowerID=borrower.borrowerId) }}">Delete</a>
-    </div>
+</main>
 {% endblock %}

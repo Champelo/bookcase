@@ -1,15 +1,30 @@
-{% extends "base.html" %}
+{% extends "header-img.html" %}
 
-{% block title %}Checkout{% endblock %}
+{% block header %}
+<div class="intro-img" style="background-image: url('../../static/asset/images/hannah-busing-G-_L3Eqkqmc-unsplash.jpg');">
+    <h1 class="h1-intro">Checkout Borrower</h1>
+</div>
+{% endblock %}
 
 {% block content %}
-<h1 align='center'>Checkout</h1>
-<ul align="center">
-    {% for borrower in borrowers %}
-        <div>
-            <a href="{{ url_for('book_bp.choose_borrower', isbn=book.isbn, borrowerID=borrower.borrowerId) }}">{{ borrower.fname }} {{ borrower.lname }}</a>
-            <p>{{ borrower.rating }}</p>
+<main class="main-browsing">
+    <div class="search">
+        <form class="search__form"> 
+            <input class= "search__bar" type="text" placeholder="Search..">
+            <button>Search</button>
+        </form>
+    </div>
+    <div class="browse-books">
+        <div class="browse-books__book-tiles">
+            {% for borrower in borrowers %}
+            <div class="card">
+                <div class="card__info card__info--left">
+                     <a class="card__info__title card__info__text" href="{{ url_for('book_bp.choose_borrower', isbn=book.isbn, borrowerID=borrower.borrowerId) }}">{{ borrower.fname }} {{ borrower.lname }}</a>
+                     <p class="card__info__subtitle card__info__text">{{ borrower.rating }}</p>
+                 </div>
+            </div>
+            {% endfor %}
         </div>
-    {% endfor %}
-</ul>
+    </div>
+</main>
 {% endblock %}

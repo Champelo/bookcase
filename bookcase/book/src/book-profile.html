@@ -20,8 +20,8 @@
             <span>
                 {% if not book.status %}
                     <p>Borrower:</p>
+                    <p>Due Date:</p>
                 {% endif %}
-                <p>Due Date:</p>
                 <p>ISBN:</p>
                 <p>Authors:</p>
                 <p>Description:</p>
@@ -29,8 +29,8 @@
             <span>
                 {% if not book.status %}
                     <p>{{book.fname}} {{book.lname }}</p>
+                    <p>{{ book.due_date }} <a class="profile-links" href="{{ url_for('book_bp.update_duedate', isbn=book.isbn) }}">Edit</a></p>
                 {% endif %}
-                <p>{{ book.due_date }} <a class="profile-links" href="{{ url_for('book_bp.update_duedate', isbn=book.isbn) }}">Edit</a></p>
                 <p>{{ book.isbn }}</p>
                 <p>{{ book.name }}</p>
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore 
