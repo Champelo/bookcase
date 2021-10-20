@@ -41,6 +41,7 @@ class Book(db.Model):
     due_date = db.Column(db.Date, nullable=True, default=None)
     status = db.Column(db.Boolean, default=True)
     overdue = db.Column(db.Boolean, default=False)
+    thumbnail = db.Column(db.String(), nullable=True, default='../../static/asset/images/freesia.svg')
     borrower_id = db.Column(db.Integer, db.ForeignKey('borrower.borrowerId'))
     authors = db.relationship('Author', secondary=booksauthors, lazy='subquery',
     backref=db.backref('books', lazy=True))

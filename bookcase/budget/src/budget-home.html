@@ -31,10 +31,13 @@
             x="120" 
             y="150" 
             fill="#F2B5A7">{{ current_user.bud_remaining }}</text>
-        </svg> 
+        </svg>
     </div>
     <div class="spending-log">
         <div><h2>Spending Log</h2></div>
+        <div class="browse-books__options">
+            <a class="browse-books__options a" href="{{ url_for('budget_bp.change_budget') }}">+ Change Budget</a>
+        </div> 
         <div class="spending-log__books">
             {% for book in books %}
                 <div class="card">

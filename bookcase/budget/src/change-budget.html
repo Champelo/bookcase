@@ -1,20 +1,24 @@
-{% extends "base.html" %}
-
-{% block title %}My Budget{% endblock %}
+{% extends "base-redo.html" %}
 
 {% block content %}
-    <h1>Change Budget</h1>
-    <form method="post" action="{{ url_for('budget_bp.change_budget') }}">
-        {{ form.csrf_token }}
-        <div class="form-group">
-            {{ form.bookprice.label }}
-            {{ form.bookprice }}
+    <div class="smallforms">
+        <h1>Update Budget</h1>
+        <form class="edit-form" method="post" action="{{ url_for('budget_bp.change_budget') }}">
             <div>
-                {% for error in form.bookprice.errors %}
-                    <p>{{ error }}</p>
-                {% endfor %}
+            <div>
+                {{ form.csrf_token }}
+                {{ form.bookprice }}
+                <div>
+                    {% for error in form.bookprice.errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+                </div>
+            </div>
+            <div>
+                <button class="form-btn form-btn--orange" type="submit" value="Submit">Submit Changes</button>
+                <button class="form-btn form-btn--red" type="submit" value="Submit">Cancel Changes</button>
             </div>
         </div>
-        <button class="btn btn-primary" type="submit" value="Submit">Enter</button>
-    </form>
+        </form>
+    </div>
 {% endblock %}
