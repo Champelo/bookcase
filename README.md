@@ -29,7 +29,6 @@ Created to learn more about APIs and frontend development.
 
 <b>Known Bugs and Issues:</b>
 <ul>
-<li>Multiple users on the same system share the same budget and bookcase account</li>
 <li>Search for new books shows duplicates</li>
 <li>Book profile page sometime gets an attribute error</li>
 <li>The app will sometimes receive a timeout error</li>
